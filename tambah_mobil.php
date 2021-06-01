@@ -170,9 +170,15 @@ if(isset ($_SESSION['username'])){
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label for="Nopol Mobil" class="col-sm-2 col-form-label">Nopol Mobil</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="nopol_mobil" class="form-control" placeholder="Masukkan Nopol Mobil" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="tipe Mobil" class="col-sm-2 col-form-label">Tipe Mobil</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="Tipe_mobil" class="form-control" placeholder="Masukkan Tipe Mobil" required>
+                                            <input type="text" name="tipe_mobil" class="form-control" placeholder="Masukkan Tipe Mobil" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -196,14 +202,15 @@ if(isset ($_SESSION['username'])){
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label"></label>
                                         <div class="col-sm-10">
-                                            <button type="submit" name="kirim_data" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan User</button>
+                                            <button type="submit" name="kirim_data" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan Mobil</button>
                                         </div>
                                     </div>
                                 </form>
                                 <?php
                                     if(isset($_POST['kirim_data'])){
                                         $id_mobil = $_POST['id_mobil'];
-                                        $Tipe_mobil = $_POST['Tipe_mobil'];
+                                        $nopol_mobil = $_POST['nopol_mobil'];
+                                        $tipe_mobil = $_POST['tipe_mobil'];
                                         $tahun_produksi = $_POST['tahun_produksi'];
                                         $harga_sewa = $_POST['harga_sewa'];
                                         $keterangan = $_POST['keterangan'];
@@ -220,7 +227,7 @@ if(isset ($_SESSION['username'])){
                                             }
                                         }
                                         if($id_valid == true){
-                                            $query_tambah = "INSERT INTO mobil VALUES('$id_mobil','$Tipe_mobil','$tahun_produksi','$harga_sewa','$keterangan')";
+                                            $query_tambah = "INSERT INTO mobil VALUES('$id_mobil','$nopol_mobil','$tipe_mobil','$tahun_produksi','$harga_sewa','$keterangan')";
                                             $sql_tambah = mysqli_query($conn, $query_tambah);
                                             if($sql_tambah){
                                                 $_SESSION['tambah'] = 'sukses';

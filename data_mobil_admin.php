@@ -169,6 +169,7 @@ if(isset ($_SESSION['username'])){
                                         <tr>
                                             <th>No.</th>
                                             <th>Id Mobil</th>
+                                            <th>Nopol Mobil</th>
                                             <th>Tipe Mobil</th>
                                             <th>Tahun Produksi</th>
                                             <th>Harga Sewa</th>
@@ -178,12 +179,29 @@ if(isset ($_SESSION['username'])){
                                     </thead>
                                     <tbody align="center">
                                     <?php
+                                    if(isset($_POST['update'])){
+                                        $harga_sewa = $_POST['harga_sewa'];
+                                        $keterangan = $_POST['keterangan'];
+                                        $id_mobil = $_POST['update'];
+                                        $query_update = "UPDATE mobil SET harga_sewa = '$harga_sewa', keterangan = '$keterangan'  WHERE id_mobil = '$id_mobil'";
+                                        $sql_update = mysqli_query($conn, $query_update);
+                                        if($sql_update){
+                                            $_SESSION['updatesukses'] = 'sukses';
+                                            echo "<script>alert('Berhasil memperbarui data Mobil!')</script>";
+                                            header('location: data_mobil_admin.php');
+                                        } else {
+                                            echo "<script>alert('Gagal memperbarui data Mobil!')</script>";
+                                        }
+                                    }
+                                    ?>
+                                    <?php
                                         while($r_dt_mobil = mysqli_fetch_array($sql_data_mobil)){
                                     ?>
                                         <tr class="odd gradeX">
                                         <td><center><?php echo $no++; ?>.</center></td>
                                         <td><?php echo $r_dt_mobil['id_mobil']; ?></td>
-                                        <td><?php echo $r_dt_mobil['Tipe_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['nopol_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['tipe_mobil']; ?></td>
                                         <td><?php echo $r_dt_mobil['tahun_produksi']; ?></td>
                                         <td><?php echo $r_dt_mobil['harga_sewa']; ?></td>
                                         <td><?php echo $r_dt_mobil['keterangan']; ?></td>
@@ -197,7 +215,7 @@ if(isset ($_SESSION['username'])){
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Edit data <?php echo $r_dt_mobil['nama']; ?>?</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit data <?php echo $r_dt_mobil['id_mobil']; ?>?</h5>
                                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
@@ -205,21 +223,39 @@ if(isset ($_SESSION['username'])){
                                                     <form action="" method="post">
                                                         <div class="modal-body">
                                                             <div class="form-group row">
-                                                                <label for="Username" class="col-sm-2 col-form-label">Nama</label>
+                                                                <label for="Id Mobil" class="col-sm-2 col-form-label">Id Mobil</label>
                                                                 <div class="col-sm-10">
-                                                                    <input type="text" class="form-control" value="<?php echo $r_dt_mobil['nama'];?>" disabled>     
+                                                                    <input type="text" class="form-control" value="<?php echo $r_dt_mobil['id_mobil'];?>" disabled>     
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label for="Email" class="col-sm-2 col-form-label">Email</label>
+                                                                <label for="Nopol Mobil" class="col-sm-2 col-form-label">Nopol Mobil</label>
                                                                 <div class="col-sm-10">
-                                                                    <input type="text" class="form-control" value="<?php echo $r_dt_mobil['email'];?>" disabled>
+                                                                    <input type="text" class="form-control" value="<?php echo $r_dt_mobil['nopol_mobil'];?>" disabled>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label for="inputPasswordNew" class="col-sm-2 col-form-label">Password</label>
+                                                                <label for="Tipe Mobil" class="col-sm-2 col-form-label">Tipe Mobil</label>
                                                                 <div class="col-sm-10">
-                                                                    <input type="password" name="passwordbaru" class="form-control" placeholder="Masukkan Password Baru" required>
+                                                                    <input type="text" class="form-control" value="<?php echo $r_dt_mobil['tipe_mobil'];?>" disabled>     
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="Tahun Produksi" class="col-sm-2 col-form-label">Tahun Produksi</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control" value="<?php echo $r_dt_mobil['tahun_produksi'];?>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="Harga Sewa" class="col-sm-2 col-form-label">Harga Sewa</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" name="harga_sewa" class="form-control" placeholder="Masukkan Harga Sewa Terbaru" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="Keterangan" class="col-sm-2 col-form-label">Keterangan</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan Terbaru" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -238,7 +274,7 @@ if(isset ($_SESSION['username'])){
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Ingin menghapus <?php echo $r_dt_mobil['nama']; ?>?</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Ingin menghapus mobil dengan id <?php echo $r_dt_mobil['id_mobil']; ?>?</h5>
                                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
@@ -253,7 +289,7 @@ if(isset ($_SESSION['username'])){
                                                     <?php
                                                         if(isset($_POST['hapus_mobil'])){
                                                             $id_mobil = $_POST['hapus_mobil'];
-                                                            $query_hapus_mobil = "DELETE FROM user WHERE id_mobil = $id_mobil";
+                                                            $query_hapus_mobil = "DELETE FROM mobil WHERE id_mobil = $id_mobil";
                                                             $sql_hapus_mobil = mysqli_query($conn, $query_hapus_mobil);
                                                             if($sql_hapus_mobil){
                                                                 header('location: data_mobil_admin.php');
