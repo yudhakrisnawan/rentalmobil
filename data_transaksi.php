@@ -24,11 +24,7 @@ if(isset ($_SESSION['username'])){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-<<<<<<< HEAD
     <title>Rent Car</title>
-=======
-    <title>RENT CAR</title>
->>>>>>> 8101bb729108271af495748d46465207dccf745e
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -187,12 +183,13 @@ if(isset ($_SESSION['username'])){
                                         while($r_dt_mobil = mysqli_fetch_array($sql_data_mobil)){
                                     ?>
                                         <tr class="odd gradeX">
-                                        <td><center><?php echo $no++; ?>.</center></td>
+                                        <!-- <td><center><?php echo $no++; ?>.</center></td> -->
                                         <td><?php echo $r_dt_mobil['id_pengembalian']; ?></td>
                                         <td><?php echo $r_dt_mobil['id_admin']; ?></td>
                                         <td><?php echo $r_dt_mobil['id_mobil']; ?></td>
                                         <td><?php echo $r_dt_mobil['id_customer']; ?></td>
                                         <td><?php echo $r_dt_mobil['id_sewa']; ?></td>
+                                        <td><?php echo $r_dt_mobil['tanggal_kembali']; ?></td>
                                         <td><?php echo $r_dt_mobil['keterangan']; ?></td>
                                         <td><?php echo $r_dt_mobil['denda']; ?></td>
                                         </tr>
