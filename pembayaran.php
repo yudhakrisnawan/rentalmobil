@@ -53,7 +53,7 @@ if(isset ($_SESSION['username'])){
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="data_mobil.php">
                 <img alt="Image placeholder" src="img/mobil.png">
                     <span>&nbsp;Data Mobil</span>
@@ -66,7 +66,8 @@ if(isset ($_SESSION['username'])){
                     <span>&nbsp;Penyewaan</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
                 <a class="nav-link" href="pembayaran.php">
                 <img alt="Image placeholder" src="img/pinjam.png">
                     <span>&nbsp;Pembayaran</span>
@@ -154,51 +155,20 @@ if(isset ($_SESSION['username'])){
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
-
+                
             <!-- Content -->
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Data Mobil</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Pembayaran</h1>
                 </div>
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                            <?php
-                            $query_data_mobil = "SELECT * FROM mobil";
-                            $sql_data_mobil = mysqli_query($conn, $query_data_mobil);
-                            $no = 1;
-                            ?>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead align="center">
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Id Mobil</th>
-                                            <th>Nopol Mobil</th>
-                                            <th>Tipe Mobil</th>
-                                            <th>Tahun Produksi</th>
-                                            <th>Harga Sewa</th>
-                                            <th>Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody align="center">
-                                    <?php
-                                        while($r_dt_mobil = mysqli_fetch_array($sql_data_mobil)){
-                                    ?>
-                                        <tr class="odd gradeX">
-                                        <td><center><?php echo $no++; ?>.</center></td>
-                                        <td><?php echo $r_dt_mobil['id_mobil']; ?></td>
-                                        <td><?php echo $r_dt_mobil['nopol_mobil']; ?></td>
-                                        <td><?php echo $r_dt_mobil['tipe_mobil']; ?></td>
-                                        <td><?php echo $r_dt_mobil['tahun_produksi']; ?></td>
-                                        <td><?php echo $r_dt_mobil['harga_sewa']; ?></td>
-                                        <td><?php echo $r_dt_mobil['keterangan']; ?></td>
-                                        </tr>
-                                    <?php
-                                        }
-                                    ?>
-                                    </tbody>
-                                </table> 
+                                <div class="judul">
+                                    <h4 align="center">Transaksi Pembayaran</h4>
+                                    <br>
+                                </div>
                             </div>
                         </div>
                     </div>

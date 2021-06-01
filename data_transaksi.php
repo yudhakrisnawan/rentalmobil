@@ -97,15 +97,15 @@ if(isset ($_SESSION['username'])){
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="data_mobil_admin.php">
-                <img alt="Image placeholder" src="img/mobil.png">
-                    <span>&nbsp; Data Mobil</span>
+                    <img alt="Image placeholder" src="img/mobil.png">
+                    <span>Data Mobil</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
                 <a class="nav-link" href="data_transaksi.php">
-                <img alt="Image placeholder" src="img/pinjam.png">
-                    <span>&nbsp;Data Transaksi</span>
+                    <img alt="Image placeholder" src="img/pinjam.png">
+                    <span>Data Transaksi</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
@@ -151,13 +151,13 @@ if(isset ($_SESSION['username'])){
 
             <!-- Content -->
             <div class="container-fluid">
-            <section class="mar-top--x-3 mar-bottom--x-5">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Data Transaksi</h1>
+                </div>
+                <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                            <center>
-                            <h1 class="h3 mb-0 text-gray-800">DATA TRANSAKSI</h1>
-                            </center>
                             <?php
                             $query_data_mobil = "SELECT * FROM pengembalian";
                             $sql_data_mobil = mysqli_query($conn, $query_data_mobil);
@@ -204,7 +204,9 @@ if(isset ($_SESSION['username'])){
                                     ?>
                                     </tbody>
                                 </table>
-
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
             <!-- End of Content -->
