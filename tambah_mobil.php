@@ -24,7 +24,7 @@ if(isset ($_SESSION['username'])){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Rent Car</title>
+    <title>Bisa Ngaji</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -46,14 +46,14 @@ if(isset ($_SESSION['username'])){
                 <div class="sidebar-brand-text mx-3">Rent Car</div>
             </a>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="beranda.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Beranda</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="data_mobil.php">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Data Mobil</span>
@@ -88,14 +88,14 @@ if(isset ($_SESSION['username'])){
                 <div class="sidebar-brand-text mx-3">Rent Car</div>
             </a>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="beranda.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Beranda</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="data_mobil_admin.php">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Data Mobil</span>
@@ -157,44 +157,88 @@ if(isset ($_SESSION['username'])){
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <div class="table-responsive">
-                            <?php
-                            $query_data_mobil = "SELECT * FROM mobil";
-                            $sql_data_mobil = mysqli_query($conn, $query_data_mobil);
-                            $no = 1;
-                            ?>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead align="center">
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Id Mobil</th>
-                                            <th>Tipe Mobil</th>
-                                            <th>Tahun Produksi</th>
-                                            <th>Harga Sewa</th>
-                                            <th>Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody align="center">
-                                    <?php
-                                        while($r_dt_mobil = mysqli_fetch_array($sql_data_mobil)){
-                                    ?>
-                                        <tr class="odd gradeX">
-                                        <td><center><?php echo $no++; ?>.</center></td>
-                                        <td><?php echo $r_dt_mobil['id_mobil']; ?></td>
-                                        <td><?php echo $r_dt_mobil['Tipe_mobil']; ?></td>
-                                        <td><?php echo $r_dt_mobil['tahun_produksi']; ?></td>
-                                        <td><?php echo $r_dt_mobil['harga_sewa']; ?></td>
-                                        <td><?php echo $r_dt_mobil['keterangan']; ?></td>
-                                        </tr>
-                                    <?php
+                            <div class="responsive">
+                                <div class="judul">
+                                    <h4 align="center">Tambah Mobil Baru</h4>
+                                    <br>
+                                </div>
+                                <form action="" method="post" class="user">
+                                    <div class="form-group row">
+                                        <label for="Id Mobil" class="col-sm-2 col-form-label">Id Mobil</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="id_mobil" class="form-control" placeholder="Masukkan Id Mobil" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="tipe Mobil" class="col-sm-2 col-form-label">Tipe Mobil</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="Tipe_mobil" class="form-control" placeholder="Masukkan Tipe Mobil" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="Tahun Produksi" class="col-sm-2 col-form-label">Tahun Produksi</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="tahun_produksi" class="form-control" placeholder="Masukkan Tahun Produksi" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="Harga Sewa" class="col-sm-2 col-form-label">Harga Sewa</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="harga_sewa" class="form-control"  placeholder="Masukkan Harga Sewa" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="Keterangan" class="col-sm-2 col-form-label">Keterangan</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-10">
+                                            <button type="submit" name="kirim_data" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan User</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <?php
+                                    if(isset($_POST['kirim_data'])){
+                                        $id_mobil = $_POST['id_mobil'];
+                                        $Tipe_mobil = $_POST['Tipe_mobil'];
+                                        $tahun_produksi = $_POST['tahun_produksi'];
+                                        $harga_sewa = $_POST['harga_sewa'];
+                                        $keterangan = $_POST['keterangan'];
+                                        $id_valid = false;
+                                        $verifikasi_id = "SELECT id_mobil FROM mobil";
+                                        $query_cek = mysqli_query($conn, $verifikasi_id);
+                                        while($data = mysqli_fetch_array($query_cek)){
+                                            $verifikasi_id = $data['id_mobil'];
+                                            if($id_mobil != $verifikasi_id){
+                                                $id_valid = true;
+                                            } elseif($id_mobil == $verifikasi_id){
+                                                $id_valid = false;
+                                                break;
+                                            }
                                         }
-                                    ?>
-                                    </tbody>
-                                </table> 
+                                        if($id_valid == true){
+                                            $query_tambah = "INSERT INTO mobil VALUES('$id_mobil','$Tipe_mobil','$tahun_produksi','$harga_sewa','$keterangan')";
+                                            $sql_tambah = mysqli_query($conn, $query_tambah);
+                                            if($sql_tambah){
+                                                $_SESSION['tambah'] = 'sukses';
+                                                echo "<script>alert('Berhasil Menambahkan Mobil!')</script>";
+                                            } else {
+                                                echo "<script>alert('Gagal Menambahkan Mobil!')</script>";
+                                                echo mysqli_error($conn);
+                                            }
+                                        } else {
+                                            echo "<script>alert('Id Mobil Sudah Ada!')</script>";
+                                        }                
+                                    }
+                                ?> 
                             </div>
                         </div>
-                    </div>
+                    </div>             
                 </section>
+                <br><br><br><br><br><br><br><br>
             </div>
             <!-- End of Content -->
 

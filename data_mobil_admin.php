@@ -152,36 +152,124 @@ if(isset ($_SESSION['username'])){
             <!-- Content -->
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Beranda</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Data Mobil</h1>
+                    <a href="tambah_mobil.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambah Mobil Baru</a>
                 </div>
                 <section class="mar-top--x-3 mar-bottom--x-5">
-                    <div class="container">
-                        <center>
-                            <h1 class="h3 mb-0 text-gray-800">SELAMAT DATANG DI BISA NGAJI</h1>
-                        </center>
-                    </div>
-                    <br>
-                    <div class="container">      
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="img/beranda2.png" class="d-block w-100" alt="gambar">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="img/beranda3.png" class="d-block w-100" alt="gambar">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="img/beranda4.jpeg" class="d-block w-100" alt="gambar">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                            <?php
+                            $query_data_mobil = "SELECT * FROM mobil";
+                            $sql_data_mobil = mysqli_query($conn, $query_data_mobil);
+                            $no = 1;
+                            ?>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead align="center">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Id Mobil</th>
+                                            <th>Tipe Mobil</th>
+                                            <th>Tahun Produksi</th>
+                                            <th>Harga Sewa</th>
+                                            <th>Keterangan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody align="center">
+                                    <?php
+                                        while($r_dt_mobil = mysqli_fetch_array($sql_data_mobil)){
+                                    ?>
+                                        <tr class="odd gradeX">
+                                        <td><center><?php echo $no++; ?>.</center></td>
+                                        <td><?php echo $r_dt_mobil['id_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['Tipe_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['tahun_produksi']; ?></td>
+                                        <td><?php echo $r_dt_mobil['harga_sewa']; ?></td>
+                                        <td><?php echo $r_dt_mobil['keterangan']; ?></td>
+                                        <td>
+                                        <button class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"data-toggle="modal" data-target="#editModal<?php echo $r_dt_mobil['id_mobil']; ?>">Edit</button>
+                                            <button class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-toggle="modal" data-target="#hapusModal<?php echo $r_dt_mobil['id_mobil']; ?>">Hapus</button>
+                                        </td>
+                                        </tr>
+                                        <div class="modal fade" id="editModal<?php echo $r_dt_mobil['id_mobil']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit data <?php echo $r_dt_mobil['nama']; ?>?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="" method="post">
+                                                        <div class="modal-body">
+                                                            <div class="form-group row">
+                                                                <label for="Username" class="col-sm-2 col-form-label">Nama</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control" value="<?php echo $r_dt_mobil['nama'];?>" disabled>     
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="Email" class="col-sm-2 col-form-label">Email</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control" value="<?php echo $r_dt_mobil['email'];?>" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="inputPasswordNew" class="col-sm-2 col-form-label">Password</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="password" name="passwordbaru" class="form-control" placeholder="Masukkan Password Baru" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="button" data-dismiss="modal">Batal</button>
+                                                            <button name="update" value="<?php echo $r_dt_mobil['id_mobil'];?>" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Simpan Perubahan</button>
+                                                        </div>
+                                                    </form>
+                                                    <?php
+                                                    ?>  
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="hapusModal<?php echo $r_dt_mobil['id_mobil']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Ingin menghapus <?php echo $r_dt_mobil['nama']; ?>?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Pilih "Hapus" jika ingin menghapus user.</div>
+                                                    <div class="modal-footer">
+                                                        <form action="" method="post">
+                                                            <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="button" data-dismiss="modal">Batal</button>
+                                                            <button name="hapus_mobil" value="<?php echo $r_dt_mobil['id_mobil']; ?>" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm">Hapus</button>
+                                                        </form> 
+                                                    </div>
+                                                    <?php
+                                                        if(isset($_POST['hapus_mobil'])){
+                                                            $id_mobil = $_POST['hapus_mobil'];
+                                                            $query_hapus_mobil = "DELETE FROM user WHERE id_mobil = $id_mobil";
+                                                            $sql_hapus_mobil = mysqli_query($conn, $query_hapus_mobil);
+                                                            if($sql_hapus_mobil){
+                                                                header('location: data_mobil_admin.php');
+                                                            }
+                                                        }
+                                                    ?>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table> 
                             </div>
                         </div>
-                        <a class="carousel-control-prev" role="button" href="#carouselExampleControls" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                        <a class="carousel-control-next" role="button" href="#carouselExampleControls" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
                     </div>
                 </section>
             </div>
