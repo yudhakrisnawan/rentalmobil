@@ -40,8 +40,8 @@ if(isset ($_SESSION['username'])){
             if($r['id_level'] == 1){
         ?>
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="beranda.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <img src="img/dashboard.png" width="30px" height="30px">
+                <div class="sidebar-brand-icon">
+                    <img src="img/icon.png" width="30px" height="30px">
                 </div>
                 <div class="sidebar-brand-text mx-3">Rent Car</div>
             </a>
@@ -55,22 +55,22 @@ if(isset ($_SESSION['username'])){
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="data_mobil.php">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Data Mobil</span>
+                <img alt="Image placeholder" src="img/mobil.png">
+                    <span>&nbsp;Data Mobil</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="peminjaman.php">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Peminjaman</span>
+                <img alt="Image placeholder" src="img/pinjam.png">
+                    <span>&nbsp;Peminjaman</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="pengembalian.php">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pengembalian</span>
+                <img alt="Image placeholder" src="img/kembali.png">
+                    <span>&nbsp;Pengembalian</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
