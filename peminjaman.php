@@ -15,6 +15,7 @@ if(isset ($_SESSION['username'])){
     
     while($r = mysqli_fetch_array($sql)){
         $nama = $r['nama'];
+        $id_ad= $r['id_admin'];
 ?>
 
 <html lang="en">
@@ -148,42 +149,82 @@ if(isset ($_SESSION['username'])){
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
-
+                
             <!-- Content -->
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Beranda</h1>
+                    <h1 class="h3 mb-0 text-gray-800"></h1>
                 </div>
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="container">
                         <center>
-                            <h1 class="h3 mb-0 text-gray-800">SELAMAT DATANG DI BISA NGAJI</h1>
+                            <h1 class="h3 mb-0 text-gray-800">PENYEWAAN</h1>
                         </center>
                     </div>
                     <br>
-                    <div class="container">      
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="img/beranda2.png" class="d-block w-100" alt="gambar">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="img/beranda3.png" class="d-block w-100" alt="gambar">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="img/beranda4.jpeg" class="d-block w-100" alt="gambar">
-                            </div>
-                        </div>
-                        <a class="carousel-control-prev" role="button" href="#carouselExampleControls" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                        <a class="carousel-control-next" role="button" href="#carouselExampleControls" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
+                    <form method="post"  action="sewa.php" >
+                    <div class="container">
+                    <table>
+                    <input type="hidden" name="id_admin" value="<?php echo $r['id_admin'];?>">
+                        <tr>
+                            <td> <label for="mobil" >Mobil</label></td>
+                            <td>
+                            <select name="id_mobil">
+                        <?php 
+                    $sql="select * from mobil WHERE keterangan='tersedia'";
+                    $hasil=mysqli_query($conn,$sql);
+                    $no=0;
+                    while ($data2 = mysqli_fetch_array($hasil)) {
+                    $no++;
+                    ?>
+                    
+                    <option  type="integer" value="<?php echo $data2['id_mobil'];?>" name="id_mobil"><?php echo $data2['id_mobil'];?></option>
+                    <?php 
+	                }
+                    ?>
+
+                </select>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="id_customer" >Customer</label></td>
+                            <td>
+                            <select name="id_customer">
+                    <?php 
+                    $sql="select * from customer";
+                    $hasil=mysqli_query($conn,$sql);
+                    $no=0;
+                    while ($data2 = mysqli_fetch_array($hasil)) {
+                    $no++;
+                    ?>
+                    
+                    <option type="integer" value="<?php echo $data2['id_customer'];?>" name="id_customer"><?php echo $data2['id_customer'];?></option>
+                    <?php 
+	                }
+                    ?>
+
+                </select>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td><label for="tanggal_sewa">Tanggal sewa</label></td>
+                            <td><input type="date" name="tanggal_sewa" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="waktu_sewa">waktu sewa</label></td>
+                            <td><input type="integer" name="waktu_sewa" required></td>
+                        </tr>                                   
+                    </table>
+                <button type="submit" value="kirim">kirim</button>            
+               
                     </div>
+                    
+            </div>      
+                    
                 </section>
+
+                </form>
             </div>
             <!-- End of Content -->
 
