@@ -159,87 +159,58 @@ if(isset ($_SESSION['username'])){
                         <div class="card-body">
                             <div class="table-responsive">
                                 <div class="judul">
-                                    <h4 align="center">Tambah Data Penyewaan</h4>
+                                    <h4 align="center">Tambah Customer Baru</h4>
                                     <br>
                                 </div>
-                                <form action="" method="post">
-                                    <input type="hidden" name="id_admin" value="<?php echo $r['id_admin'];?>">
+                                <form action="" method="post" class="user">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Id Mobil</label>
+                                        <label for="Nama Lengkap" class="col-sm-2 col-form-label">Nama Lengkap</label>
                                         <div class="col-sm-10">
-                                            <select name="id_mobil">
-                                                <?php 
-                                                $sql1="select * from mobil WHERE keterangan='tersedia'";
-                                                $hasil=mysqli_query($conn,$sql1);
-                                                while ($data2 = mysqli_fetch_array($hasil)) {
-                                                ?>                                   
-                                                <option  type="integer" value="<?php echo $data2['id_mobil'];?>" name="id_mobil"><?php echo $data2['id_mobil'];?></option>
-                                                <?php 
-                                                }
-                                                ?>
-                                            </select>
+                                            <input type="text" name="nama" class="form-control" placeholder="Masukkan Nama Lengkap" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Customer</label>
+                                        <label for="Nomor KTP" class="col-sm-2 col-form-label">Nomor KTP</label>
                                         <div class="col-sm-10">
-                                            <select name="id_customer">
-                                                <?php 
-                                                $sql2="select * from customer";
-                                                $hasil=mysqli_query($conn,$sql2);
-                                                while ($data2 = mysqli_fetch_array($hasil)) {
-                                                ?>                                    
-                                                <option type="integer" value="<?php echo $data2['id_customer'];?>" name="id_customer"><?php echo $data2['id_customer'];?></option>
-                                                
-                                                <?php 
-                                                }
-                                                ?>
-                                            </select>
-                                            <a href="tambah_customer.php" name="tambah_customer" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">&nbsp;+&nbsp;</a>
+                                            <input type="text" name="nomor_ktp" class="form-control"  placeholder="Masukkan Nomor KTP" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Tanggal Sewa</label>
+                                        <label for="Alamat" class="col-sm-2 col-form-label">Alamat</label>
                                         <div class="col-sm-10">
-                                            <input type="date" name="tanggal_sewa" class="form-control" placeholder="Masukkan Tanggal Sewa" required>
+                                            <input type="text" name="alamat" class="form-control" placeholder="Masukkan Alamat" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Waktu Sewa</label>
+                                        <label for="Tanggal Lahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                                         <div class="col-sm-10">
-                                            <input type="integer" name="waktu_sewa" class="form-control" placeholder="Masukkan Waktu Sewa (Dalam Hari)" required>
+                                            <input type="date" name="tanggal_lahir" class="form-control" placeholder="Masukkan Alamat" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label"></label>
                                         <div class="col-sm-10">
-                                            <button type="submit" name="kirim" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan Data</button>
+                                            <button type="submit" name="kirim_data" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan User</button>
                                         </div>
                                     </div>
                                 </form>
                                 <?php
-                                    if(isset($_POST['kirim'])){
-                                        $id_admin=$_POST["id_admin"];
-                                        $id_mobil=$_POST["id_mobil"];
-                                        $id_customer=$_POST["id_customer"];
-                                        $tanggal_sewa=$_POST["tanggal_sewa"];
-                                        $waktu_sewa=$_POST["waktu_sewa"];
-                                        //Query input menginput data kedalam tabel barang
-                                        $sql3="CALL penyewaan ($id_admin,'$id_mobil','$id_customer','$tanggal_sewa',$waktu_sewa)";
-
-                                        //Mengeksekusi/menjalankan query diatas	
-                                        $hasil=mysqli_query($conn,$sql3);
-
-                                        //Kondisi apakah berhasil atau tidak
-                                        if ($hasil) {
-                                            echo "<script>alert('Berhasil Insert Data!');</script>";
-                                            header("Refresh:0");
-                                        }
-                                        else {
-                                            echo "<script>alert('Gagal Insert Data!')</script>";
-                                        }  
+                                    if(isset($_POST['kirim_data'])){
+                                        $nama = $_POST['nama'];
+                                        $nomor_ktp = $_POST['nomor_ktp'];
+                                        $alamat = $_POST['alamat'];
+                                        $tanggal_lahir = $_POST['tanggal_lahir'];
+                                        $query_data = "INSERT INTO customer VALUES('','$nama','$nomor_ktp','$alamat',' $tanggal_lahir')";
+                                        $sql_data = mysqli_query($conn, $query_data);
+                                        if($sql_data){
+                                            $_SESSION['daftar'] = 'sukses';
+                                            echo "<script>alert('Berhasil Menambahkan Customer!')</script>";
+                                            header("Refresh:0; url=peminjaman.php");
+                                        } else {
+                                            echo "<script>alert('Gagal Menambahkan Customer!')</script>";
+                                        }               
                                     }
-                                ?>
+                                ?> 
                             </div>
                         </div>
                     </div>

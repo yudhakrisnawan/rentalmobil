@@ -63,7 +63,7 @@ if(isset ($_SESSION['username'])){
             <li class="nav-item">
                 <a class="nav-link" href="peminjaman.php">
                 <img alt="Image placeholder" src="img/pinjam.png">
-                    <span>&nbsp;Peminjaman</span>
+                    <span>&nbsp;Penyewaan</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
