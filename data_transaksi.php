@@ -24,7 +24,11 @@ if(isset ($_SESSION['username'])){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+<<<<<<< HEAD
     <title>Rent Car</title>
+=======
+    <title>RENT CAR</title>
+>>>>>>> 8101bb729108271af495748d46465207dccf745e
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -41,7 +45,7 @@ if(isset ($_SESSION['username'])){
         ?>
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="beranda.php">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <img src="img/dashboard.png" width="30px" height="30px">
+                <img src="img/icon.png" width="30px" height="30px">
                 </div>
                 <div class="sidebar-brand-text mx-3">Rent Car</div>
             </a>
@@ -151,38 +155,53 @@ if(isset ($_SESSION['username'])){
 
             <!-- Content -->
             <div class="container-fluid">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Beranda</h1>
-                </div>
-                <section class="mar-top--x-3 mar-bottom--x-5">
-                    <div class="container">
-                        <center>
-                            <h1 class="h3 mb-0 text-gray-800">SELAMAT DATANG DI BISA NGAJI</h1>
-                        </center>
-                    </div>
-                    <br>
-                    <div class="container">      
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="img/beranda2.png" class="d-block w-100" alt="gambar">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="img/beranda3.png" class="d-block w-100" alt="gambar">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="img/beranda4.jpeg" class="d-block w-100" alt="gambar">
-                            </div>
-                        </div>
-                        <a class="carousel-control-prev" role="button" href="#carouselExampleControls" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                        <a class="carousel-control-next" role="button" href="#carouselExampleControls" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                    </div>
+            <section class="mar-top--x-3 mar-bottom--x-5">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                            <center>
+                            <h1 class="h3 mb-0 text-gray-800">DATA TRANSAKSI</h1>
+                            </center>
+                            <?php
+                            $query_data_mobil = "SELECT * FROM pengembalian";
+                            $sql_data_mobil = mysqli_query($conn, $query_data_mobil);
+                            $no = 1;
+                            ?>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead align="center">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>ID Admin</th>
+                                            <th>ID Mobil</th>
+                                            <th>ID Customer</th>
+                                            <th>ID Sewa</th>
+                                            <th>Tanggal Kembali</th>
+                                            <th>Keterangan</th>
+                                            <th>Denda</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody align="center">
+                                    
+                                    <?php
+                                        while($r_dt_mobil = mysqli_fetch_array($sql_data_mobil)){
+                                    ?>
+                                        <tr class="odd gradeX">
+                                        <td><center><?php echo $no++; ?>.</center></td>
+                                        <td><?php echo $r_dt_mobil['id_pengembalian']; ?></td>
+                                        <td><?php echo $r_dt_mobil['id_admin']; ?></td>
+                                        <td><?php echo $r_dt_mobil['id_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['id_customer']; ?></td>
+                                        <td><?php echo $r_dt_mobil['id_sewa']; ?></td>
+                                        <td><?php echo $r_dt_mobil['keterangan']; ?></td>
+                                        <td><?php echo $r_dt_mobil['denda']; ?></td>
+                                        </tr>
+                                        <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+
                 </section>
             </div>
             <!-- End of Content -->
