@@ -8,128 +8,105 @@
 ?>
 <html lang="en">
 <head>
-	<title>Rent Car</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-
-	<link rel="icon" type="image/png" href="template/masuk/images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="template/masuk/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="template/masuk/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="template/masuk/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="template/masuk/vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="template/masuk/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="template/masuk/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="template/masuk/css/util.css">
-	<link rel="stylesheet" type="text/css" href="template/masuk/css/main.css">
-<!--===============================================================================================-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Bisa Ngaji</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-<body>
-	<div class="limiter">
-		<div class="container-login100" style="background-image: url('template/masuk/images/background.jpg');">
-			<div class="wrap-login100 p-t-120 p-b-30">
-				<form action="" method="post" class="login100-form validate-form">
-					<?php 
-						if(isset($_SESSION['eror'])){
-					?>
-						<div class='container'>	
-							<div class = 'alert alert-danger'>
-								<span>
-									<center>Mungkin Username atau Password yang anda masukkan salah</center>
-								</span>
-							</div> 
-						</div>
-					<?php 
-						unset($_SESSION['eror']);
-						}
-					?>
-					<div class="login100-form-avatar">
-						<img src="template/masuk/images/logo.png" alt="AVATAR">
-					</div>
 
-					<span class="login100-form-title p-t-20 p-b-45">
-						RENT CAR INDONESIA
-					</span>
-					<div class="wrap-input100 validate-input m-b-10" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" placeholder="Username">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-user"></i>
-						</span>
-					</div>
+<body class="bg-gradient-primary">
+    <div class="limiter">
+    <br><br><br><br>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 col-md-9">
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-0">
+                            <!-- Nested Row within Card Body -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h1 class="h4 text-gray-900 mb-4">Selamat datang!</h1>
+                                        </div>
+                                        <form action="" method="post" class="user validate-form">
+                                            <?php 
+                                                if(isset($_SESSION['eror'])){
+                                            ?>
+                                                <div class='container'>	
+                                                    <div class='alert alert-danger'>
+                                                        <span>
+                                                            <center>Mungkin Username atau Password yang anda masukkan salah</center>
+                                                        </span>
+                                                    </div> 
+                                                </div>
+                                            <?php 
+                                                unset($_SESSION['eror']);
+                                                }
+                                            ?>
+                                            <div class="form-group validate-input" data-validate = "Email is required">
+                                                <input type="text" name="username" class="form-control form-control-user" placeholder="Masukkan Username">
+                                            </div>
+                                            <div class="form-group validate-input" data-validate = "Password is required">
+                                                <input type="password" name="password" class="form-control form-control-user" placeholder="Masukkan Password">
+                                            </div>
+                                            <button type="submit" name="login" class="btn btn-success btn-user btn-block">
+                                                Login
+                                            </button>
+                                        </form>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+        if(isset ($_REQUEST['login'])){
+            $arr_level = array();
+            $c_level = mysqli_query($conn, "select * from level_user");
 
-					<div class="wrap-input100 validate-input m-b-10" data-validate = "Password is required">
-						<input class="input100" type="password" name="password" placeholder="Password">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock"></i>
-						</span>
-					</div>
+            while($r = mysqli_fetch_array($c_level)){
+                array_push($arr_level, $r['nama_level']);
+            }
+            foreach ($arr_level as $kontens) {
+                //echo $kontens." || ";
+            }
+            $username = $_REQUEST['username'];
+            $password = $_REQUEST['password'];
 
-					<div class="container-login100-form-btn p-t-10">
-						<button type="submit" name="login" class="login100-form-btn">
-							Login
-						</button>
-					</div>
-				</form>
-				<?php
-					if(isset ($_REQUEST['login'])){
-						$arr_level = array();
-						$c_level = mysqli_query($conn, "select * from level_user");
+            $akun = mysqli_query($conn, "select * from admin natural join level_user");
+            echo mysqli_error($conn);
+            while($r = mysqli_fetch_array($akun)){
+                if($r['username'] == $username and $r['password'] == $password){
+                    $_SESSION['username'] = $username;
+                    $_SESSION['id_admin'] = $r['id_admin'];
+                    $_SESSION['level'] = $r['id_level'];
+                    if(isset($_SESSION['eror'])){
+                        unset($_SESSION['eror']);
+                    }
+                    header('location: beranda.php');
+                    break;
+                } else {
+                    $_SESSION['eror'] = 'salah';
+                    header('location: index.php');
+                }
+            } 
+        } 
+    ?>
 
-						while($r = mysqli_fetch_array($c_level)){
-							array_push($arr_level, $r['nama_level']);
-						}
-						foreach ($arr_level as $kontens) {
-							//echo $kontens." || ";
-						}
-						$username = $_REQUEST['username'];
-						$password = $_REQUEST['password'];
-
-						$akun = mysqli_query($conn, "select * from admin natural join level_user");
-						echo mysqli_error($conn);
-						while($r = mysqli_fetch_array($akun)){
-							if($r['username'] == $username and $r['password'] == $password){
-								$_SESSION['username'] = $username;
-								$_SESSION['id_admin'] = $r['id_admin'];
-								$_SESSION['level'] = $r['id_level'];
-								if(isset($_SESSION['eror'])){
-									unset($_SESSION['eror']);
-								}
-								header('location: beranda.php');
-								break;
-							} else {
-								$_SESSION['eror'] = 'salah';
-								header('location: index.php');
-							}
-						} 
-					} 
-				?>
-			</div>
-		</div>
-	</div>
-
-	
-	
-
-	
-<!--===============================================================================================-->	
-	<script src="template/masuk/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="template/masuk/vendor/bootstrap/js/popper.js"></script> 
-	<script src="template/masuk/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="template/masuk/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="template/masuk/js/main.js"></script>
-
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
 </body>
 </html>
 <?php

@@ -19,117 +19,210 @@ if(isset ($_SESSION['username'])){
 
 <html lang="en">
 <head>
-<title>Data Transaksi</title>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="template/dashboard/css/bootstrap.min.css" />
-<link rel="stylesheet" href="template/dashboard/css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="template/dashboard/css/fullcalendar.css" />
-<link rel="stylesheet" href="template/dashboard/css/matrix-style.css" />
-<link rel="stylesheet" href="template/dashboard/css/matrix-media.css" />
-<link href="template/dashboard/font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link rel="stylesheet" href="template/dashboard/css/jquery.gritter.css" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Bisa Ngaji</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/arabic.css" rel="stylesheet" >
 </head>
-<body>
 
-<!--Header-part-->
-<div id="header">
-  <h1><a href="data_transaksi.php">Data Transaksi</a></h1>
-</div>
-<!--close-Header-part--> 
+<body id="page-top">
+    <div id="wrapper">
 
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <?php
+            if($r['id_level'] == 1){
+        ?>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="beranda.php">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img src="img/dashboard.png" width="30px" height="30px">
+                </div>
+                <div class="sidebar-brand-text mx-3">Rent Car</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="beranda.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Beranda</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="data_mobil.php">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Data Mobil</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="peminjaman.php">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Peminjaman</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="pengembalian.php">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pengembalian</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <br>
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        <?php
+            } else if($r['id_level'] == 2){
+        ?>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="beranda.php">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img src="img/dashboard.png" width="30px" height="30px">
+                </div>
+                <div class="sidebar-brand-text mx-3">Rent Car</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="beranda.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Beranda</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="data_mobil_admin.php">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Data Mobil</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="data_transaksi.php">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Data Transaksi</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <br>
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        <?php
+            }
+        ?>
+        </ul>
+        <!-- End of Sidebar -->
 
-<!--top-Header-menu-->
-<div id="user-nav" class="navbar navbar-inverse">
-  <ul class="nav">
-    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome <?php echo $r['nama'];?></span><b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a href="#"><i class="icon-user"></i><?php echo "&nbsp;&nbsp;".$r['nama'];?></a></li>
-        <li><a href="logout.php"><i class="icon-key"></i> Log Out</a></li>
-      </ul>
-    </li>
-    <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
-  </ul>
-</div>
-<!--close-top-Header-menu-->
-<!--start-top-serch-->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                  
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <ul class="navbar-nav ml-auto">
+                        
+                        <!-- Informasi User -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $r['nama'];?></span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+                            
+                            <!-- Dropdown User -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" id="custom-dropdown" href="logout.php" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
 
-<!--close-top-serch-->
-<!--sidebar-menu-->
-<div id="sidebar"><a href="data_mobil.php" class="visible-phone"><i class="icon icon-tasks"></i> <span>Data Mobil</span></a>
-  <ul>
-  <?php
-    if($r['id_level'] == 1){
-  ?>
-    <li class="active"> <a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
-    <li> <a href="data_mobil.php"><i class="icon icon-tasks"></i> <span>Data Mobil</span></a> </li>
-    <li> <a href="peminjaman.php"><i class="icon icon-shopping-cart"></i> <span>Peminjaman</span></a> </li>
-    <li> <a href="pengembalian.php"><i class="icon icon-inbox"></i> <span>Pengembalian</span></a> </li>
-    <li> <a href="pembayaran.php"><i class="icon icon-print"></i> <span>Pembayaran</span></a> </li>
-    <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
-  <?php
-    } else if($r['id_level'] == 2){
-  ?>
-    <li><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
-    <li> <a href="data_mobil_admin.php"><i class="icon icon-tasks"></i> <span>Data Mobil</span></a> </li>
-    <li class="active"> <a href="data_transaksi.php"><i class="icon icon-inbox"></i> <span>Data Transaksi</span></a> </li>
-    <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
-  <?php
-    }
-  ?>
-  </ul>
-</div>
-<!--sidebar-menu-->
+            <!-- Content -->
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Beranda</h1>
+                </div>
+                <section class="mar-top--x-3 mar-bottom--x-5">
+                    <div class="container">
+                        <center>
+                            <h1 class="h3 mb-0 text-gray-800">SELAMAT DATANG DI BISA NGAJI</h1>
+                        </center>
+                    </div>
+                    <br>
+                    <div class="container">      
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="img/beranda2.png" class="d-block w-100" alt="gambar">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/beranda3.png" class="d-block w-100" alt="gambar">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/beranda4.jpeg" class="d-block w-100" alt="gambar">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" role="button" href="#carouselExampleControls" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                        <a class="carousel-control-next" role="button" href="#carouselExampleControls" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+            <!-- End of Content -->
 
-<!--main-container-part-->
-<div id="content">
-<!--breadcrumbs-->
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="data_transaksi.php" title="Go to here" class="tip-bottom"><i class="icon icon-inbox"></i> Data Transaksi</a></div>
-  </div>
-<!--End-breadcrumbs-->
-  
-<!--Action boxes-->
-  <div class="container-fluid">
-    <div class="row-fluid">
-    
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Kelompok 9</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
-<!--End-Action boxes-->    
-  </div>
-</div>
 
-<!--end-main-container-part-->
+    <!-- Logout-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ingin keluar?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Pilih "Keluar" jika ingin meninggalkan halaman.</div>
+                <div class="modal-footer">
+                    <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="button" data-dismiss="modal">Batal</button>
+                    <a class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" href="logout.php">Keluar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!--Footer-part-->
-
-<div class="row-fluid">
-  <div id="footer" class="span12"> <?php echo date('Y'); ?> &copy; Rent Car <a href="#">Kelompok 9</a> </div>
-</div>
-
-<!--end-Footer-part-->
-
-<script src="template/dashboard/js/excanvas.min.js"></script> 
-<script src="template/dashboard/js/jquery.min.js"></script> 
-<script src="template/dashboard/js/jquery.ui.custom.js"></script> 
-<script src="template/dashboard/js/bootstrap.min.js"></script> 
-<script src="template/dashboard/js/jquery.flot.min.js"></script> 
-<script src="template/dashboard/js/jquery.flot.resize.min.js"></script> 
-<script src="template/dashboard/js/jquery.peity.min.js"></script> 
-<script src="template/dashboard/js/fullcalendar.min.js"></script> 
-<script src="template/dashboard/js/matrix.js"></script> 
-<script src="template/dashboard/js/matrix.dashboard.js"></script> 
-<script src="template/dashboard/js/jquery.gritter.min.js"></script> 
-<script src="template/dashboard/js/matrix.interface.js"></script> 
-<script src="template/dashboard/js/matrix.chat.js"></script> 
-<script src="template/dashboard/js/jquery.validate.js"></script> 
-<script src="template/dashboard/js/matrix.form_validation.js"></script> 
-<script src="template/dashboard/js/jquery.wizard.js"></script> 
-<script src="template/dashboard/js/jquery.uniform.js"></script> 
-<script src="template/dashboard/js/select2.min.js"></script> 
-<script src="template/dashboard/js/matrix.popover.js"></script> 
-<script src="template/dashboard/js/jquery.dataTables.min.js"></script> 
-<script src="template/dashboard/js/matrix.tables.js"></script> 
+    <!-- JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
 </body>
 </html>
 <?php
