@@ -227,7 +227,7 @@ if(isset ($_SESSION['username'])){
                                             }
                                         }
                                         if($id_valid == true){
-                                            $query_tambah = "INSERT INTO mobil VALUES('$id_mobil','$nopol_mobil','$tipe_mobil','$tahun_produksi','$harga_sewa','$keterangan')";
+                                            $query_tambah = "CALL tambah_mobil('$id_mobil','$nopol_mobil','$tipe_mobil','$tahun_produksi','$harga_sewa','$keterangan')";
                                             $sql_tambah = mysqli_query($conn, $query_tambah);
                                             if($sql_tambah){
                                                 $_SESSION['tambah'] = 'sukses';
