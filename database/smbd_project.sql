@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Jun 2021 pada 14.49
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.6
+-- Waktu pembuatan: 01 Jun 2021 pada 15.33
+-- Versi server: 10.4.14-MariaDB
+-- Versi PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `smbd_project`
 --
+
+DELIMITER $$
+--
+-- Prosedur
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pengembalian` (IN `vidadmin` VARCHAR(10), IN `vidmobil` VARCHAR(10), IN `vidcustomer` VARCHAR(10), IN `vidsewa` VARCHAR(10), IN `vtanggalkembali` DATE, IN `vketerangan` VARCHAR(10), IN `vdenda` INT(10))  BEGIN UPDATE mobil SET keterangan='tersedia' WHERE id_mobil = vidmobil ; 
+INSERT INTO `pengembalian` (`id_admin`, `id_mobil`, `id_customer`, `id_sewa`, `tanggal_kembali`, `keterangan`, `denda`) 
+VALUES (vidadmin, vidmobil, vidcustomer, vidsewa, vtanggalkembali, vketerangan, vdenda); DELETE FROM `penyewaan` WHERE `id_sewa` = vidsewa; 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `penyewaan` (IN `vidadmin` VARCHAR(10), IN `vidmobil` VARCHAR(10), IN `vidcustomer` VARCHAR(10), IN `vtanggalsewa` DATE, IN `vwaktusewa` VARCHAR(10))  BEGIN UPDATE mobil SET keterangan='tidak tersedia' 
+    WHERE id_mobil = vidmobil 
+    ;
+    INSERT INTO `penyewaan` (`id_admin`, `id_mobil`, `id_customer`, `tanggal_sewa`, `waktu_sewa`) 
+    VALUES (vidadmin,vidmobil, vidcustomer, vtanggalsewa, vwaktusewa);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_mobil` (IN `vidmobil` INT(11), IN `vnopolmobil` VARCHAR(100), IN `vtipemobil` VARCHAR(100), IN `vtahun_produksi` INT(11), IN `vhargasewa` INT(11), IN `vketerangan` VARCHAR(100))  BEGIN 
+INSERT INTO `mobil`(`id_mobil`, `nopol_mobil`, `tipe_mobil`, `tahun_produksi`, `harga_sewa`, `keterangan`)
+VALUES (vidmobil,vnopolmobil,vtipemobil,vtahun_produksi,vhargasewa,vketerangan);
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -107,8 +130,8 @@ CREATE TABLE `mobil` (
 --
 
 INSERT INTO `mobil` (`id_mobil`, `nopol_mobil`, `tipe_mobil`, `tahun_produksi`, `harga_sewa`, `keterangan`) VALUES
-(1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tersedia'),
-(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tersedia');
+(1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tidak tersedia'),
+(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tidak tersedia');
 
 -- --------------------------------------------------------
 
@@ -141,6 +164,14 @@ CREATE TABLE `penyewaan` (
   `tanggal_sewa` date NOT NULL,
   `waktu_sewa` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `penyewaan`
+--
+
+INSERT INTO `penyewaan` (`id_sewa`, `id_admin`, `id_mobil`, `id_customer`, `tanggal_sewa`, `waktu_sewa`) VALUES
+(1, 1, 1, 1, '2021-05-18', 3),
+(2, 1, 2, 2, '2021-06-03', 9);
 
 --
 -- Indexes for dumped tables
@@ -213,10 +244,16 @@ ALTER TABLE `mobil`
   MODIFY `id_mobil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT untuk tabel `pengembalian`
+--
+ALTER TABLE `pengembalian`
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
-  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
