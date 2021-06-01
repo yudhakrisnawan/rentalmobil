@@ -24,7 +24,7 @@ if(isset ($_SESSION['username'])){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Bisa Ngaji</title>
+    <title>RENT CAR</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -157,7 +157,7 @@ if(isset ($_SESSION['username'])){
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="container">
                         <center>
-                            <h1 class="h3 mb-0 text-gray-800">SELAMAT DATANG DI BISA NGAJI</h1>
+                            <h1 class="h3 mb-0 text-gray-800">SELAMAT DATANG DI RENT CAR</h1>
                         </center>
                     </div>
                     <br>
@@ -165,13 +165,16 @@ if(isset ($_SESSION['username'])){
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="img/beranda2.png" class="d-block w-100" alt="gambar">
+                                <img src="img/nissan.jpg" class="d-block w-100" alt="gambar">
                             </div>
                             <div class="carousel-item">
-                                <img src="img/beranda3.png" class="d-block w-100" alt="gambar">
+                                <img src="img/one.jpg" class="d-block w-100" alt="gambar">
                             </div>
                             <div class="carousel-item">
-                                <img src="img/beranda4.jpeg" class="d-block w-100" alt="gambar">
+                                <img src="img/alphard.jpg" class="d-block w-100" alt="gambar">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/dodge.jpg" class="d-block w-100" alt="gambar">
                             </div>
                         </div>
                         <a class="carousel-control-prev" role="button" href="#carouselExampleControls" data-slide="prev">
