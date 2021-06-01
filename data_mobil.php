@@ -168,6 +168,7 @@ if(isset ($_SESSION['username'])){
                                         <tr>
                                             <th>No.</th>
                                             <th>Id Mobil</th>
+                                            <th>Nopol Mobil</th>
                                             <th>Tipe Mobil</th>
                                             <th>Tahun Produksi</th>
                                             <th>Harga Sewa</th>
@@ -181,7 +182,8 @@ if(isset ($_SESSION['username'])){
                                         <tr class="odd gradeX">
                                         <td><center><?php echo $no++; ?>.</center></td>
                                         <td><?php echo $r_dt_mobil['id_mobil']; ?></td>
-                                        <td><?php echo $r_dt_mobil['Tipe_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['nopol_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['tipe_mobil']; ?></td>
                                         <td><?php echo $r_dt_mobil['tahun_produksi']; ?></td>
                                         <td><?php echo $r_dt_mobil['harga_sewa']; ?></td>
                                         <td><?php echo $r_dt_mobil['keterangan']; ?></td>
