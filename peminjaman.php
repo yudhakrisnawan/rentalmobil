@@ -15,7 +15,7 @@ if(isset ($_SESSION['username'])){
     
     while($r = mysqli_fetch_array($sql)){
         $nama = $r['nama'];
-        $id_ad= $r['id_admin'];
+        
 ?>
 
 <html lang="en">

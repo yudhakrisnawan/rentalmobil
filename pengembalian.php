@@ -151,37 +151,69 @@ if(isset ($_SESSION['username'])){
 
             <!-- Content -->
             <div class="container-fluid">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Beranda</h1>
-                </div>
+                
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="container">
                         <center>
-                            <h1 class="h3 mb-0 text-gray-800">SELAMAT DATANG DI BISA NGAJI</h1>
+                            <h1 class="h3 mb-0 text-gray-800">PENGEMBALIAN</h1>
                         </center>
                     </div>
                     <br>
                     <div class="container">      
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="img/beranda2.png" class="d-block w-100" alt="gambar">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="img/beranda3.png" class="d-block w-100" alt="gambar">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="img/beranda4.jpeg" class="d-block w-100" alt="gambar">
-                            </div>
-                        </div>
-                        <a class="carousel-control-prev" role="button" href="#carouselExampleControls" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                        <a class="carousel-control-next" role="button" href="#carouselExampleControls" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
+                    <form method="post"  action="kembali.php" >
+                    <div class="container">
+                    <table>
+                    <input type="hidden" name="id_admin" value="<?php echo $r['id_admin'];?>">
+                        <tr>
+                            <td> <label for="idsewa" >ID SEWA</label></td>
+                            <td>
+                            <select name="id_sewa">
+                        <?php 
+                    $sql="select * from penyewaan";
+                    $hasil=mysqli_query($conn,$sql);
+                    $no=0;
+                    while ($data2 = mysqli_fetch_array($hasil)) {
+                    $no++;
+                    ?>
+                    
+                    <option  type="integer" value="<?php echo $data2['id_sewa'];?>" name="id_sewa"><?php echo $data2['id_sewa'];?></option>
+                    
+                    <?php 
+	                }
+                    ?>
+
+                </select>
+                
+                            </td>
+                        </tr>
+                         
+                        <tr>
+                            <td><label for="tanggal_kembali">Tanggal kembali</label></td>
+                            <td><input type="date" name="tanggal_kembali" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="keterangan">keterangan</label></td>
+                            <td><input type="text" name="keterangan" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="denda">Denda</label></td>
+                            <td><input type="integer" name="denda" required></td>
+                        </tr> 
+                        <tr>
+                        
+                        </tr>                                    
+                    </table>
+                <button type="submit" value="kirim">kirim</button>            
+               
+                    </div>
+                    
+            </div>      
+                    
+                </section>
+
+                </form>
+
+
                     </div>
                 </section>
             </div>
