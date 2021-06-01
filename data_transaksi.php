@@ -82,8 +82,8 @@ if(isset ($_SESSION['username'])){
             } else if($r['id_level'] == 2){
         ?>
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="beranda.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <img src="img/dashboard.png" width="30px" height="30px">
+                <div class="sidebar-brand-icon">
+                <img src="img/icon.png" width="30px" height="30px">
                 </div>
                 <div class="sidebar-brand-text mx-3">Rent Car</div>
             </a>
@@ -97,15 +97,15 @@ if(isset ($_SESSION['username'])){
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="data_mobil_admin.php">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Data Mobil</span>
+                <img alt="Image placeholder" src="img/mobil.png">
+                    <span>&nbsp; Data Mobil</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
                 <a class="nav-link" href="data_transaksi.php">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Data Transaksi</span>
+                <img alt="Image placeholder" src="img/pinjam.png">
+                    <span>&nbsp;Data Transaksi</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
@@ -173,7 +173,10 @@ if(isset ($_SESSION['username'])){
                                             <th>ID Sewa</th>
                                             <th>Tanggal Kembali</th>
                                             <th>Keterangan</th>
+                                            <th>Lama Sewa</th>
+                                            <th>Biaya Sewa</th>
                                             <th>Denda</th>
+                                            <td>Total Pembayaran</td>
                                             
                                         </tr>
                                     </thead>
@@ -191,7 +194,10 @@ if(isset ($_SESSION['username'])){
                                         <td><?php echo $r_dt_mobil['id_sewa']; ?></td>
                                         <td><?php echo $r_dt_mobil['tanggal_kembali']; ?></td>
                                         <td><?php echo $r_dt_mobil['keterangan']; ?></td>
+                                        <td><?php echo $r_dt_mobil['lama_sewa']; ?></td>
+                                        <td><?php echo $r_dt_mobil['biaya_sewa']; ?></td>
                                         <td><?php echo $r_dt_mobil['denda']; ?></td>
+                                        <td><?php echo $r_dt_mobil['total_pembayaran']; ?></td>
                                         </tr>
                                         <?php
                                         }

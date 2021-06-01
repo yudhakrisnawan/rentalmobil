@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Jun 2021 pada 17.33
+-- Waktu pembuatan: 01 Jun 2021 pada 20.15
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.2.34
 
@@ -130,7 +130,7 @@ CREATE TABLE `mobil` (
 --
 
 INSERT INTO `mobil` (`id_mobil`, `nopol_mobil`, `tipe_mobil`, `tahun_produksi`, `harga_sewa`, `keterangan`) VALUES
-(1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tersedia'),
+(1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tidak tersedia'),
 (2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tersedia');
 
 -- --------------------------------------------------------
@@ -147,21 +147,25 @@ CREATE TABLE `pengembalian` (
   `id_sewa` int(11) NOT NULL,
   `tanggal_kembali` date NOT NULL,
   `keterangan` varchar(1000) NOT NULL,
-  `denda` int(11) NOT NULL
+  `lama_sewa` int(11) NOT NULL,
+  `biaya_sewa` int(11) NOT NULL,
+  `denda` int(11) NOT NULL,
+  `total_pembayaran` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pengembalian`
 --
 
-INSERT INTO `pengembalian` (`id_pengembalian`, `id_admin`, `id_mobil`, `id_customer`, `id_sewa`, `tanggal_kembali`, `keterangan`, `denda`) VALUES
-(1, 1, 2, 2, 2, '2021-06-03', 'c', 46),
-(2, 1, 2, 2, 2, '2021-06-03', 'c', 46),
-(3, 1, 2, 2, 2, '2021-06-03', 'c', 46),
-(4, 1, 2, 2, 2, '2021-06-02', 'a', 32),
-(5, 1, 2, 2, 2, '2020-01-01', 'a', 12),
-(6, 1, 2, 2, 2, '2020-01-01', 'a', 12),
-(7, 1, 1, 1, 3, '2021-06-02', 'a', 32);
+INSERT INTO `pengembalian` (`id_pengembalian`, `id_admin`, `id_mobil`, `id_customer`, `id_sewa`, `tanggal_kembali`, `keterangan`, `lama_sewa`, `biaya_sewa`, `denda`, `total_pembayaran`) VALUES
+(1, 1, 2, 2, 2, '2021-06-03', 'c', 0, 0, 46, 0),
+(2, 1, 2, 2, 2, '2021-06-03', 'c', 0, 0, 46, 0),
+(3, 1, 2, 2, 2, '2021-06-03', 'c', 0, 0, 46, 0),
+(4, 1, 2, 2, 2, '2021-06-02', 'a', 0, 0, 32, 0),
+(5, 1, 2, 2, 2, '2020-01-01', 'a', 0, 0, 12, 0),
+(6, 1, 2, 2, 2, '2020-01-01', 'a', 0, 0, 12, 0),
+(7, 1, 1, 1, 3, '2021-06-02', 'a', 0, 0, 32, 0),
+(8, 1, 1, 1, 4, '2021-06-03', 'a', 9, 2000000, 100000, 18100000);
 
 -- --------------------------------------------------------
 
@@ -177,6 +181,13 @@ CREATE TABLE `penyewaan` (
   `tanggal_sewa` date NOT NULL,
   `waktu_sewa` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `penyewaan`
+--
+
+INSERT INTO `penyewaan` (`id_sewa`, `id_admin`, `id_mobil`, `id_customer`, `tanggal_sewa`, `waktu_sewa`) VALUES
+(4, 1, 1, 1, '2021-06-02', 9);
 
 --
 -- Indexes for dumped tables
@@ -252,13 +263,13 @@ ALTER TABLE `mobil`
 -- AUTO_INCREMENT untuk tabel `pengembalian`
 --
 ALTER TABLE `pengembalian`
-  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
-  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

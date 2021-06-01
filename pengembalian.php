@@ -227,9 +227,26 @@ if(isset ($_SESSION['username'])){
                                         $tanggal_kembali=$_POST["tanggal_kembali"];
                                         $keterangan=$_POST["keterangan"];
                                         $denda=$_POST["denda"];
+
+                                        $sql3="SELECT waktu_sewa FROM penyewaan WHERE id_sewa=$id_sewa";
+                                        
+                                        
+                                        
+                                        $hasil3=mysqli_query($conn,$sql3);
+                                        
+                                        $data3 = mysqli_fetch_array($hasil3);
+                                        $lama_sewa=$data3[0];
+
+                                        $sql5="SELECT harga_sewa FROM mobil WHERE id_mobil=$id_mobil";
+                                        $hasil5=mysqli_query($conn,$sql5);
+                                        $data5 = mysqli_fetch_array($hasil5);
+
+                                        $biaya_sewa=$data5[0];
+
+                                        $hargatotal=($lama_sewa*$biaya_sewa)+$denda;
                                         //Query input menginput data kedalam tabel barang
-                                                    
-                                        $sql4="CALL pengembalian ($id_admin,$id_mobil,$id_customer,$id_sewa,'$tanggal_kembali','$keterangan',$denda)";
+                                        
+                                        $sql4="insert into pengembalian values(null,$id_admin,$id_mobil,$id_customer,$id_sewa,'$tanggal_kembali','$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal)";
 
                                         //Mengeksekusi/menjalankan query diatas	
                                         $hasil=mysqli_query($conn,$sql4);
@@ -241,6 +258,7 @@ if(isset ($_SESSION['username'])){
                                         }
                                         else {
                                             echo "<script>alert('Gagal Insert Data!')</script>";
+                                            echo mysqli_error($conn);
                                         }  
                                     }  
                                 ?>
