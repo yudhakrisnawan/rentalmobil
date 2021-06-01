@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Jun 2021 pada 15.33
+-- Waktu pembuatan: 01 Jun 2021 pada 17.33
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.2.34
 
@@ -130,8 +130,8 @@ CREATE TABLE `mobil` (
 --
 
 INSERT INTO `mobil` (`id_mobil`, `nopol_mobil`, `tipe_mobil`, `tahun_produksi`, `harga_sewa`, `keterangan`) VALUES
-(1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tidak tersedia'),
-(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tidak tersedia');
+(1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tersedia'),
+(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tersedia');
 
 -- --------------------------------------------------------
 
@@ -150,6 +150,19 @@ CREATE TABLE `pengembalian` (
   `denda` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `pengembalian`
+--
+
+INSERT INTO `pengembalian` (`id_pengembalian`, `id_admin`, `id_mobil`, `id_customer`, `id_sewa`, `tanggal_kembali`, `keterangan`, `denda`) VALUES
+(1, 1, 2, 2, 2, '2021-06-03', 'c', 46),
+(2, 1, 2, 2, 2, '2021-06-03', 'c', 46),
+(3, 1, 2, 2, 2, '2021-06-03', 'c', 46),
+(4, 1, 2, 2, 2, '2021-06-02', 'a', 32),
+(5, 1, 2, 2, 2, '2020-01-01', 'a', 12),
+(6, 1, 2, 2, 2, '2020-01-01', 'a', 12),
+(7, 1, 1, 1, 3, '2021-06-02', 'a', 32);
+
 -- --------------------------------------------------------
 
 --
@@ -164,14 +177,6 @@ CREATE TABLE `penyewaan` (
   `tanggal_sewa` date NOT NULL,
   `waktu_sewa` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `penyewaan`
---
-
-INSERT INTO `penyewaan` (`id_sewa`, `id_admin`, `id_mobil`, `id_customer`, `tanggal_sewa`, `waktu_sewa`) VALUES
-(1, 1, 1, 1, '2021-05-18', 3),
-(2, 1, 2, 2, '2021-06-03', 9);
 
 --
 -- Indexes for dumped tables
@@ -247,13 +252,13 @@ ALTER TABLE `mobil`
 -- AUTO_INCREMENT untuk tabel `pengembalian`
 --
 ALTER TABLE `pengembalian`
-  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
-  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -271,8 +276,7 @@ ALTER TABLE `admin`
 ALTER TABLE `pengembalian`
   ADD CONSTRAINT `pengembalian_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`),
   ADD CONSTRAINT `pengembalian_ibfk_2` FOREIGN KEY (`id_mobil`) REFERENCES `mobil` (`id_mobil`),
-  ADD CONSTRAINT `pengembalian_ibfk_3` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id_customer`),
-  ADD CONSTRAINT `pengembalian_ibfk_4` FOREIGN KEY (`id_sewa`) REFERENCES `penyewaan` (`id_sewa`);
+  ADD CONSTRAINT `pengembalian_ibfk_3` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id_customer`);
 
 --
 -- Ketidakleluasaan untuk tabel `penyewaan`
