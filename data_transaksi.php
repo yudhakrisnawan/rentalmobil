@@ -176,7 +176,8 @@ if(isset ($_SESSION['username'])){
                                             <th>Lama Sewa</th>
                                             <th>Biaya Sewa</th>
                                             <th>Denda</th>
-                                            <td>Total Pembayaran</td>
+                                            <th>keterangan</th>
+                                            <th>Total Pembayaran</th>
                                             
                                         </tr>
                                     </thead>
@@ -197,6 +198,7 @@ if(isset ($_SESSION['username'])){
                                         <td><?php echo $r_dt_mobil['lama_sewa']; ?></td>
                                         <td><?php echo $r_dt_mobil['biaya_sewa']; ?></td>
                                         <td><?php echo $r_dt_mobil['denda']; ?></td>
+                                        <td><?php echo $r_dt_mobil['keterangan_bayar']; ?></td>
                                         <td><?php echo $r_dt_mobil['total_pembayaran']; ?></td>
                                         </tr>
                                         <?php
@@ -204,6 +206,19 @@ if(isset ($_SESSION['username'])){
                                     ?>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="card-body" align="right">                            
+                            <?php
+
+                                $sql6 = mysqli_query($conn, "SELECT SUM(total_pembayaran)
+                                FROM pengembalian where keterangan_bayar ='terbayar'");
+                                while($data6 = mysqli_fetch_array($sql6)) {
+                                     ?>
+                                     Total penghasilan :&nbsp;
+                                     <?php echo "Rp." . number_format($data6['SUM(total_pembayaran)']) ;?>
+                                     <?php
+                                     }
+                                     ?>
                             </div>
                         </div>
                     </div>
