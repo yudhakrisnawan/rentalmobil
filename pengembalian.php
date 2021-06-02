@@ -250,22 +250,23 @@ if(isset ($_SESSION['username'])){
 
                                         //Query input menginput data kedalam tabel barang
                                         
-                                        $sql4="CALL pengembalian(null,$id_admin,$id_mobil,$id_customer,$id_sewa,$tanggal_kembali,'$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal,'$keterangan_bayar')";
+                                        mysqli_begin_transaction($conn);
+                                        $sql4="CALL pengembalian(null,$id_admin,$id_mobil,$id_customer,$id_sewa,'$tanggal_kembali','$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal,'$keterangan_bayar')";
                                         
-                                        
-                                        
-                                        //Mengeksekusi/menjalankan query diatas	
+                                        //Mengeksekusi/menjalankan query diatas
+                                        	
                                         $hasil=mysqli_query($conn,$sql4);
 
                                         //Kondisi apakah berhasil atau tidak
-                                        if ($hasil) {
+                                        if (mysqli_commit($conn)) {
                                             echo "<script>alert('Berhasil Insert Data!');</script>";
                                             // mysqli_query($conn, "DELETE FROM penyewaan WHERE id_sewa = $id_sewa");
                                             // mysqli_query($conn, "UPDATE mobil SET keterangan = 'tersedia' WHERE id_mobil = $id_mobil");
-                                            // header("location:pembayaran.php");
+                                            header("Refresh:0; url=pembayaran.php");
                                             echo mysqli_error($conn);
                                         }
                                         else {
+                                            mysqli_rollback($conn);
                                             echo "<script>alert('Gagal Insert Data!')</script>";
                                             echo mysqli_error($conn);
                                         }  

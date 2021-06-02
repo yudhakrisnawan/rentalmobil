@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jun 2021 pada 13.06
+-- Waktu pembuatan: 02 Jun 2021 pada 14.55
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -25,6 +25,16 @@ DELIMITER $$
 --
 -- Prosedur
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pengembalian` (IN `vid_pengembalian` INT(11), IN `vid_admin` INT(11), IN `vid_mobil` INT(11), IN `vid_customer` INT(11), IN `vid_sewa` INT(11), IN `vtanggal_kembali` DATE, IN `vketerangan` VARCHAR(1000), IN `vlama_sewa` INT(11), IN `vbiaya_sewa` INT(11), IN `vdenda` INT(11), IN `vtotal_pembayaran` INT(12), IN `vketerangan_bayar` VARCHAR(25))  BEGIN
+
+INSERT INTO pengembalian VALUES (NULL, vid_admin, vid_mobil, vid_customer, vid_sewa, vtanggal_kembali, vketerangan, vlama_sewa, vbiaya_sewa, vdenda, vtotal_pembayaran, vketerangan_bayar);
+
+DELETE FROM penyewaan WHERE id_sewa = vid_sewa;
+
+UPDATE mobil SET keterangan = 'tersedia' WHERE id_mobil = vid_mobil;
+
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `penyewaan` (IN `vidadmin` VARCHAR(10), IN `vidmobil` VARCHAR(10), IN `vidcustomer` VARCHAR(10), IN `vtanggalsewa` DATE, IN `vwaktusewa` VARCHAR(10))  BEGIN UPDATE mobil SET keterangan='tidak tersedia' 
     WHERE id_mobil = vidmobil 
     ;
@@ -109,6 +119,28 @@ INSERT INTO `level_user` (`id_level`, `nama_level`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `log_data_mobil`
+--
+
+CREATE TABLE `log_data_mobil` (
+  `id_log` int(11) NOT NULL,
+  `id_mobil` int(11) NOT NULL,
+  `harga_lama` int(11) NOT NULL,
+  `harga_baru` int(11) NOT NULL,
+  `waktu_perubahan` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `log_data_mobil`
+--
+
+INSERT INTO `log_data_mobil` (`id_log`, `id_mobil`, `harga_lama`, `harga_baru`, `waktu_perubahan`) VALUES
+(1, 1, 2000000, 90000, '2021-06-02'),
+(2, 1, 90000, 2000000, '2021-06-02');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `mobil`
 --
 
@@ -127,7 +159,41 @@ CREATE TABLE `mobil` (
 
 INSERT INTO `mobil` (`id_mobil`, `nopol_mobil`, `tipe_mobil`, `tahun_produksi`, `harga_sewa`, `keterangan`) VALUES
 (1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tersedia'),
-(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tidak tersedia');
+(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tersedia');
+
+--
+-- Trigger `mobil`
+--
+DELIMITER $$
+CREATE TRIGGER `update_harga` BEFORE UPDATE ON `mobil` FOR EACH ROW BEGIN
+    INSERT INTO log_data_mobil
+    set id_mobil = OLD.id_mobil,
+    harga_baru=new.harga_sewa,
+    harga_lama=old.harga_sewa,
+    waktu_perubahan = NOW(); 
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `mobil_ready`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `mobil_ready` (
+`COUNT(id_mobil)` bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `mobil_terpinjam`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `mobil_terpinjam` (
+`COUNT(id_sewa)` bigint(21)
+);
 
 -- --------------------------------------------------------
 
@@ -174,8 +240,13 @@ INSERT INTO `pengembalian` (`id_pengembalian`, `id_admin`, `id_mobil`, `id_custo
 (10, 1, 2, 1, 11, '2021-06-10', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
 (11, 1, 2, 1, 11, '2021-06-03', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
 (12, 1, 2, 1, 12, '2021-06-03', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
-(13, 1, 2, 2, 13, '2021-06-09', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'belum terbayar'),
-(14, 1, 1, 1, 14, '0000-00-00', 'lecet bosss', 9, 2000000, 1000000, 19000000, 'belum terbayar');
+(13, 1, 2, 2, 13, '2021-06-09', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(14, 1, 1, 1, 14, '0000-00-00', 'lecet bosss', 9, 2000000, 1000000, 19000000, 'terbayar'),
+(16, 1, 2, 1, 15, '2021-06-10', 'lecetttt', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(17, 1, 2, 2, 16, '2021-06-11', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(18, 1, 2, 2, 17, '2021-06-10', 'lecet bosss', 9, 2300000, 10000000, 30700000, 'belum terbayar'),
+(19, 1, 2, 3, 18, '2021-06-25', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'belum terbayar'),
+(20, 1, 2, 1, 19, '2021-06-11', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'belum terbayar');
 
 -- --------------------------------------------------------
 
@@ -192,12 +263,23 @@ CREATE TABLE `penyewaan` (
   `waktu_sewa` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `penyewaan`
---
+-- --------------------------------------------------------
 
-INSERT INTO `penyewaan` (`id_sewa`, `id_admin`, `id_mobil`, `id_customer`, `tanggal_sewa`, `waktu_sewa`) VALUES
-(15, 1, 2, 1, '2021-06-04', 9);
+--
+-- Struktur untuk view `mobil_ready`
+--
+DROP TABLE IF EXISTS `mobil_ready`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `mobil_ready`  AS  select count(`mobil`.`id_mobil`) AS `COUNT(id_mobil)` from `mobil` where `mobil`.`keterangan` = 'tersedia' ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `mobil_terpinjam`
+--
+DROP TABLE IF EXISTS `mobil_terpinjam`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `mobil_terpinjam`  AS  select count(`penyewaan`.`id_sewa`) AS `COUNT(id_sewa)` from `penyewaan` ;
 
 -- --------------------------------------------------------
 
@@ -230,6 +312,12 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `level_user`
   ADD PRIMARY KEY (`id_level`);
+
+--
+-- Indeks untuk tabel `log_data_mobil`
+--
+ALTER TABLE `log_data_mobil`
+  ADD PRIMARY KEY (`id_log`);
 
 --
 -- Indeks untuk tabel `mobil`
@@ -273,6 +361,12 @@ ALTER TABLE `customer`
   MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT untuk tabel `log_data_mobil`
+--
+ALTER TABLE `log_data_mobil`
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT untuk tabel `mobil`
 --
 ALTER TABLE `mobil`
@@ -282,13 +376,13 @@ ALTER TABLE `mobil`
 -- AUTO_INCREMENT untuk tabel `pengembalian`
 --
 ALTER TABLE `pengembalian`
-  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
-  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

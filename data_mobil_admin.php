@@ -182,9 +182,8 @@ if(isset ($_SESSION['username'])){
                                     <?php
                                     if(isset($_POST['update'])){
                                         $harga_sewa = $_POST['harga_sewa'];
-                                        $keterangan = $_POST['keterangan'];
                                         $id_mobil = $_POST['update'];
-                                        $query_update = "UPDATE mobil SET harga_sewa = '$harga_sewa', keterangan = '$keterangan'  WHERE id_mobil = '$id_mobil'";
+                                        $query_update = "UPDATE mobil SET harga_sewa = '$harga_sewa' WHERE id_mobil = '$id_mobil'";
                                         $sql_update = mysqli_query($conn, $query_update);
                                         if($sql_update){
                                             $_SESSION['updatesukses'] = 'sukses';
@@ -256,7 +255,7 @@ if(isset ($_SESSION['username'])){
                                                             <div class="form-group row">
                                                                 <label for="Keterangan" class="col-sm-2 col-form-label">Keterangan</label>
                                                                 <div class="col-sm-10">
-                                                                    <input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan Terbaru" required>
+                                                                    <input type="text" value="<?php echo $r_dt_mobil['keterangan'];?>" class="form-control" disabled>
                                                                 </div>
                                                             </div>
                                                         </div>

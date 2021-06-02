@@ -233,7 +233,7 @@ if(isset ($_SESSION['username'])){
                                         //Kondisi apakah berhasil atau tidak
                                         if ($hasil) {
                                             echo "<script>alert('Berhasil Insert Data!');</script>";
-                                            // header("Refresh:0");
+                                            header("Refresh:0");
                                             echo mysqli_error($conn);
                                         }
                                         else {
