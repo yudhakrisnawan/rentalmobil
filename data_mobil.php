@@ -150,11 +150,93 @@ if(isset ($_SESSION['username'])){
                 <!-- End of Topbar -->
 
             <!-- Content -->
+            <?php
+                $catalog_mobil_terpinjam = mysqli_query($conn, "SELECT view_definition FROM information_schema.views WHERE TABLE_NAME = 'mobil_terpinjam'");
+                $view_mobil_terpinjam;
+                foreach ($catalog_mobil_terpinjam as $row) {
+                    $view_mobil_terpinjam = $row['view_definition'];
+                }
+                $execute_view_mobil_terpinjam = mysqli_query($conn, $view_mobil_terpinjam);
+                $count_terpinjam = 0;
+                foreach ($execute_view_mobil_terpinjam as $row) {
+                    $count_terpinjam = $row['COUNT(id_sewa)'];
+                }
+            ?>
+            <?php
+                $catalog_mobil_ready = mysqli_query($conn, "SELECT view_definition FROM information_schema.views WHERE TABLE_NAME = 'mobil_ready'");
+                $view_mobil_ready;
+                foreach ($catalog_mobil_ready as $row) {
+                    $view_mobil_ready = $row['view_definition'];
+                }
+                $execute_view_mobil_ready = mysqli_query($conn, $view_mobil_ready);
+                $count_ready = 0;
+                foreach ($execute_view_mobil_ready as $row) {
+                    $count_ready = $row['COUNT(id_mobil)'];
+                }
+            ?>
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Data Mobil</h1>
                     <a href="data_mobil_tersedia.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tampilkan Data Mobil Tersedia</a>
                 </div>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-gray-800 text-uppercase mb-1">Mobil Dipinjam
+                                        </div>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-auto">
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $count_terpinjam ?></div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="progress progress-sm mr-2">
+                                                    <div class="progress-bar bg-primary" role="progressbar"
+                                                        style="width: 100%" aria-valuenow="50" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-gray-800 text-uppercase mb-1">Mobil Tersedia
+                                        </div>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-auto">
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $count_ready ?></div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="progress progress-sm mr-2">
+                                                    <div class="progress-bar bg-primary" role="progressbar"
+                                                        style="width: 100%" aria-valuenow="50" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
