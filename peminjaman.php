@@ -157,7 +157,7 @@ if(isset ($_SESSION['username'])){
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="responsive">
                                 <div class="judul">
                                     <h4 align="center">Tambah Data Penyewaan</h4>
                                     <br>
@@ -167,7 +167,7 @@ if(isset ($_SESSION['username'])){
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Id Mobil</label>
                                         <div class="col-sm-10">
-                                            <select name="id_mobil">
+                                            <select name="id_mobil" class="form-control">
                                                 <?php 
                                                 $sql1="select * from mobil WHERE keterangan='tersedia'";
                                                 $hasil=mysqli_query($conn,$sql1);
@@ -183,7 +183,7 @@ if(isset ($_SESSION['username'])){
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Customer</label>
                                         <div class="col-sm-10">
-                                            <select name="id_customer">
+                                            <select name="id_customer" >
                                                 <?php 
                                                 $sql2="select * from customer";
                                                 $hasil=mysqli_query($conn,$sql2);
@@ -195,7 +195,8 @@ if(isset ($_SESSION['username'])){
                                                 }
                                                 ?>
                                             </select>
-                                            <a href="tambah_customer.php" name="tambah_customer" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">&nbsp;+&nbsp;</a>
+                                            <a href="tambah_customer.php" name="tambah_customer" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-fw fa-plus"></i></a>
+                                            <a href="data_customer.php" name="data_customer" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"> <i class="fas fa-fw fa-eye"></i></a>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -246,6 +247,7 @@ if(isset ($_SESSION['username'])){
                     </div>
                 </section>
             </div>
+            <br><br><br><br>
             <!-- End of Content -->
 
             <!-- Footer -->

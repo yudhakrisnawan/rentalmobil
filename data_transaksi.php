@@ -157,6 +157,47 @@ if(isset ($_SESSION['username'])){
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
+                            <div class="responsive">
+                                <form action="" method="post" class="user">
+                                    <?php
+                                        $banyak_peminjaman = "";
+                                    ?>
+                                    <?php
+                                        if(isset($_POST['cari'])){
+                                            $id_mobil = $_POST['id_mobil'];
+                                            $query_cari = "SELECT show_car('$id_mobil')";
+                                            $sql_cari = mysqli_query($conn, $query_cari);
+                                            while($test = mysqli_fetch_array($sql_cari)){
+                                                $banyak_peminjaman = $test[0]; 
+                                            }
+                                        }                                   
+                                    ?> 
+                                    <div class="form-group row">
+                                        <label for="Id Mobil" class="col-sm-2 col-form-label">Id Mobil</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="id_mobil" class="form-control" placeholder="Masukkan Id Mobil" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-10">
+                                            <button type="submit" name="cari" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Cari</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="Banyak Peminjaman" class="col-sm-2 col-form-label">Banyak Peminjaman</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="banyak_peminjaman" value="<?php echo $banyak_peminjaman; ?>" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                                </form>                             
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="mar-top--x-3 mar-bottom--x-5">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
                             <div class="table-responsive">
                             <?php
                             $query_data_mobil = "SELECT * FROM pengembalian";

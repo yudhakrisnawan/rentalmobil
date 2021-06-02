@@ -281,6 +281,7 @@ if(isset ($_SESSION['username'])){
                     </div>
                 </section>
             </div>
+            <br><br><br><br><br>
             <!-- End of Content -->
 
             <!-- Footer -->

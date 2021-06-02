@@ -157,7 +157,7 @@ if(isset ($_SESSION['username'])){
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="responsive">
                                 <div class="judul">
                                     <h4 align="center">Tambah Customer Baru</h4>
                                     <br>
@@ -216,6 +216,7 @@ if(isset ($_SESSION['username'])){
                     </div>
                 </section>
             </div>
+            <br><br><br><br>
             <!-- End of Content -->
 
             <!-- Footer -->
