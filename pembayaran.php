@@ -67,13 +67,6 @@ if(isset ($_SESSION['username'])){
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="pembayaran.php">
-                <img alt="Image placeholder" src="img/pinjam.png">
-                    <span>&nbsp;Pembayaran</span>
-                </a>
-            </li>
-            <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="pengembalian.php">
                 <img alt="Image placeholder" src="img/kembali.png">
@@ -166,17 +159,23 @@ if(isset ($_SESSION['username'])){
                         <div class="card-body">
                             <div class="table-responsive">
                                 <div class="judul">
-                                    <h4 align="center">Tambah Data Pengembalian</h4>
+                                    <h4 align="center">Transaksi Pembayaran</h4>
                                     <br>
                                 </div>
-            <form action="" method="post">
+                                <form action="" method="post">
+                                    <?php
+                                        $lama_sewa = ""; 
+                                        $biaya_sewa = "";
+                                        $denda = "";
+                                        $tagihan = "";
+                                    ?>
                                     <input type="hidden" name="id_admin" value="<?php echo $r['id_admin'];?>">
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Id Sewa</label>
                                         <div class="col-sm-10">
-                                            <select name="id_sewa">
-                                                    <?php 
-                                                $sql1="select * from penyewaan";
+                                            <select name="id_sewa" class="form-control">
+                                                <?php 
+                                                $sql1="select * from pengembalian";
                                                 $hasil=mysqli_query($conn,$sql1);
                                                 $no=0;
                                                 while ($data2 = mysqli_fetch_array($hasil)) {
@@ -192,95 +191,87 @@ if(isset ($_SESSION['username'])){
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Tanggal Kembali</label>
+                                        <label class="col-sm-2 col-form-label"></label>
                                         <div class="col-sm-10">
-                                            <input type="date" name="tanggal_kembali" class="form-control" placeholder="Masukkan Tanggal Kembali" required>
+                                            <button type="submit" name="hitung" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Hitung</button>
+                                        </div>
+                                    </div>
+                                    <?php
+                                        if(isset($_POST['hitung'])){
+                                            $id_sewa = $_POST['id_sewa'];
+                                            $query_read = mysqli_query($conn, "SELECT lama_sewa, biaya_sewa, denda FROM pengembalian WHERE id_sewa = $id_sewa");
+                                            
+                                            while($test = mysqli_fetch_array($query_read)){
+                                                $lama_sewa = $test[0]; 
+                                                $biaya_sewa = $test[1];
+                                                $denda = $test[2];
+                                            }
+                                            $tagihan = ($lama_sewa*$biaya_sewa)+$denda;            
+                                        }
+                                    ?>  
+                                    
+                                    <div class="form-group row">
+                                        <label  class="col-sm-2 col-form-label">Lama Sewa</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="lama_sewa"  value="<?php echo $lama_sewa; ?>" class="form-control" placeholder="Lama Sewa" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Keterangan</label>
+                                        <label  class="col-sm-2 col-form-label">Biaya Sewa</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan" required>
+                                            <input type="number" name="biaya_sewa" value="<?php echo $biaya_sewa; ?>" class="form-control" placeholder="Biaya Sewa" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label  class="col-sm-2 col-form-label">Denda</label>
                                         <div class="col-sm-10">
-                                            <input type="integer" name="denda" class="form-control" placeholder="Masukkan Denda (Dalam Rupiah)" required>
+                                            <input type="number" name="denda" value="<?php echo $denda; ?>" class="form-control" placeholder="Denda (Dalam Rupiah)" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label  class="col-sm-2 col-form-label">Tagihan</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" name="tagihan" value="<?php echo $tagihan; ?>" class="form-control" placeholder="Tagihan (Dalam Rupiah)" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label  class="col-sm-2 col-form-label">Uang yang dibayarkan</label>
                                         <div class="col-sm-10">
-                                            <input type="integer" name="bayar" class="form-control" placeholder="Masukkan Denda (Dalam Rupiah)" required>
+                                            <input type="number" name="bayar" class="form-control" placeholder="Masukkan Uang Yang Dibayarkan (Dalam Rupiah)">
                                         </div>
                                     </div>
+                                    
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label"></label>
                                         <div class="col-sm-10">
-                                            <button type="submit" name="kirim" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan Data</button>
+                                            <button type="submit" name="kirim" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Bayar</button>
+                                        </div>
+                                    </div>
+                                    <input hidden type="number" name="id_sewa1" value="<?php echo $id_sewa; ?>">
+                                    <?php
+                                        if(isset($_POST['kirim'])){
+                                            $id_sewa1 = $_POST['id_sewa1'];
+                                            $query_read = mysqli_query($conn, "SELECT lama_sewa, biaya_sewa, denda FROM pengembalian WHERE id_sewa = $id_sewa1");
+                                            
+                                            while($test = mysqli_fetch_array($query_read)){
+                                                $lama_sewa = $test[0]; 
+                                                $biaya_sewa = $test[1];
+                                                $denda = $test[2];
+                                            }
+                                            $tagihan = ($lama_sewa*$biaya_sewa)+$denda; 
+                                            $bayar = $_POST['bayar'];
+                                            $bayar = (int) filter_var($bayar, FILTER_SANITIZE_NUMBER_INT);
+                                            $tagihan = (int) filter_var($tagihan, FILTER_SANITIZE_NUMBER_INT);
+                                            $kembalian = $bayar-$tagihan;           
+                                        }
+                                    ?>  
+                                    <div class="form-group row">
+                                        <label  class="col-sm-2 col-form-label">Kembalian</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" name="kembalian"  value="<?php echo $kembalian; ?>" class="form-control" placeholder="Uang Kembalian (Dalam Rupiah)" disabled>
                                         </div>
                                     </div>
                                 </form>
-                                <?php
-                                    if(isset($_POST['kirim'])){
-                                        $id_sewa=$_POST["id_sewa"];
-
-                                        $sql2="SELECT * FROM penyewaan WHERE id_sewa=$id_sewa";
-
-                                        $hasil2=mysqli_query($conn,$sql2);
-                                        while ($data2 = mysqli_fetch_array($hasil2)){
-                                        $id_mobil=$data2['id_mobil'];
-                                        $id_customer=$data2['id_customer'];
-                                        }
-
-                                        $id_admin=$_POST["id_admin"];
-
-
-                                        $tanggal_kembali=$_POST["tanggal_kembali"];
-                                        $keterangan=$_POST["keterangan"];
-                                        $denda=$_POST["denda"];
-
-                                        $sql3="SELECT waktu_sewa FROM penyewaan WHERE id_sewa=$id_sewa";
-                                        
-                                        
-                                        
-                                        $hasil3=mysqli_query($conn,$sql3);
-                                        
-                                        $data3 = mysqli_fetch_array($hasil3);
-                                        $lama_sewa=$data3[0];
-
-                                        $sql5="SELECT harga_sewa FROM mobil WHERE id_mobil=$id_mobil";
-                                        $hasil5=mysqli_query($conn,$sql5);
-                                        $data5 = mysqli_fetch_array($hasil5);
-
-                                        $biaya_sewa=$data5[0];
-
-                                        $hargatotal=($lama_sewa*$biaya_sewa)+$denda;
-                                        $uang_bayar =$_POST["bayar"];
-
-                                        
-
-                                        //Query input menginput data kedalam tabel barang
-                                        
-                                        $sql4="insert into pengembalian VALUES (null,$id_admin,$id_mobil,$id_customer,$id_sewa,'$tanggal_kembali','$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal )";
-                                        
-                                        $sql6="INSERT INTO pembayaran VALUES (null, $id_customer, $id_mobil, $lama_sewa, $uang_bayar, '$keterangan', $denda , $hargatotal)";
-                                        
-                                        //Mengeksekusi/menjalankan query diatas	
-                                        $hasil=mysqli_query($conn,$sql4);
-
-                                        //Kondisi apakah berhasil atau tidak
-                                        if ($hasil) {
-                                            echo "<script>alert('Berhasil Insert Data!');</script>";
-                                            header("location:pembayaran.php;");
-                                        }
-                                        else {
-                                            echo "<script>alert('Gagal Insert Data!')</script>";
-                                            echo mysqli_error($conn);
-                                        }  
-                                    }  
-                                ?>
                             </div>
                         </div>
                     </div>

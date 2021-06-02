@@ -68,13 +68,6 @@ if(isset ($_SESSION['username'])){
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
-                <a class="nav-link" href="pembayaran.php">
-                <img alt="Image placeholder" src="img/pinjam.png">
-                    <span>&nbsp;Pembayaran</span>
-                </a>
-            </li>
-            <hr class="sidebar-divider my-0">
-            <li class="nav-item">
                 <a class="nav-link" href="pengembalian.php">
                 <img alt="Image placeholder" src="img/kembali.png">
                     <span>&nbsp;Pengembalian</span>
