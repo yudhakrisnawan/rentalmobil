@@ -1,7 +1,7 @@
 <?php
 	$host = "localhost";
-	$user = "root";
-	$pass = "";
+	$user = "admin";
+	$pass = "pwadmin";
 	
 	$db = "smbd_project";
 	$conn = mysqli_connect($host,$user,$pass,$db);
