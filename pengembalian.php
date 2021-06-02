@@ -208,6 +208,7 @@ if(isset ($_SESSION['username'])){
                                             <input type="integer" name="denda" class="form-control" placeholder="Masukkan Denda (Dalam Rupiah)" required>
                                         </div>
                                     </div>
+                                    
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label"></label>
                                         <div class="col-sm-10">
@@ -250,17 +251,23 @@ if(isset ($_SESSION['username'])){
                                         $biaya_sewa=$data5[0];
 
                                         $hargatotal=($lama_sewa*$biaya_sewa)+$denda;
+                                        $uang_bayar =$_POST["bayar"];
+
+                                        
+
                                         //Query input menginput data kedalam tabel barang
                                         
-                                        $sql4="insert into pengembalian values(null,$id_admin,$id_mobil,$id_customer,$id_sewa,'$tanggal_kembali','$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal)";
-
+                                        $sql4="insert into pengembalian VALUES (null,$id_admin,$id_mobil,$id_customer,$id_sewa,'$tanggal_kembali','$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal )";
+                                        
+                                        $sql6="INSERT INTO pembayaran VALUES (null, $id_customer, $id_mobil, $lama_sewa, $uang_bayar, '$keterangan', $denda , $hargatotal)";
+                                        
                                         //Mengeksekusi/menjalankan query diatas	
                                         $hasil=mysqli_query($conn,$sql4);
 
                                         //Kondisi apakah berhasil atau tidak
                                         if ($hasil) {
                                             echo "<script>alert('Berhasil Insert Data!');</script>";
-                                            header("Refresh:0");
+                                            header("location:pembayaran.php");
                                         }
                                         else {
                                             echo "<script>alert('Gagal Insert Data!')</script>";

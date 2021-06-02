@@ -159,21 +159,136 @@ if(isset ($_SESSION['username'])){
             <!-- Content -->
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Pembayaran</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Pengembalian</h1>
                 </div>
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <div class="judul">
-                                    <h4 align="center">Transaksi Pembayaran</h4>
+                                    <h4 align="center">Tambah Data Pengembalian</h4>
                                     <br>
                                 </div>
+            <form action="" method="post">
+                                    <input type="hidden" name="id_admin" value="<?php echo $r['id_admin'];?>">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Id Sewa</label>
+                                        <div class="col-sm-10">
+                                            <select name="id_sewa">
+                                                    <?php 
+                                                $sql1="select * from penyewaan";
+                                                $hasil=mysqli_query($conn,$sql1);
+                                                $no=0;
+                                                while ($data2 = mysqli_fetch_array($hasil)) {
+                                                $no++;
+                                                ?>
+                                            
+                                                <option  type="integer" value="<?php echo $data2['id_sewa'];?>" name="id_sewa"><?php echo $data2['id_sewa'];?></option>
+                                                
+                                                <?php 
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label  class="col-sm-2 col-form-label">Tanggal Kembali</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" name="tanggal_kembali" class="form-control" placeholder="Masukkan Tanggal Kembali" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label  class="col-sm-2 col-form-label">Keterangan</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label  class="col-sm-2 col-form-label">Denda</label>
+                                        <div class="col-sm-10">
+                                            <input type="integer" name="denda" class="form-control" placeholder="Masukkan Denda (Dalam Rupiah)" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label  class="col-sm-2 col-form-label">Uang yang dibayarkan</label>
+                                        <div class="col-sm-10">
+                                            <input type="integer" name="bayar" class="form-control" placeholder="Masukkan Denda (Dalam Rupiah)" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-10">
+                                            <button type="submit" name="kirim" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan Data</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <?php
+                                    if(isset($_POST['kirim'])){
+                                        $id_sewa=$_POST["id_sewa"];
+
+                                        $sql2="SELECT * FROM penyewaan WHERE id_sewa=$id_sewa";
+
+                                        $hasil2=mysqli_query($conn,$sql2);
+                                        while ($data2 = mysqli_fetch_array($hasil2)){
+                                        $id_mobil=$data2['id_mobil'];
+                                        $id_customer=$data2['id_customer'];
+                                        }
+
+                                        $id_admin=$_POST["id_admin"];
+
+
+                                        $tanggal_kembali=$_POST["tanggal_kembali"];
+                                        $keterangan=$_POST["keterangan"];
+                                        $denda=$_POST["denda"];
+
+                                        $sql3="SELECT waktu_sewa FROM penyewaan WHERE id_sewa=$id_sewa";
+                                        
+                                        
+                                        
+                                        $hasil3=mysqli_query($conn,$sql3);
+                                        
+                                        $data3 = mysqli_fetch_array($hasil3);
+                                        $lama_sewa=$data3[0];
+
+                                        $sql5="SELECT harga_sewa FROM mobil WHERE id_mobil=$id_mobil";
+                                        $hasil5=mysqli_query($conn,$sql5);
+                                        $data5 = mysqli_fetch_array($hasil5);
+
+                                        $biaya_sewa=$data5[0];
+
+                                        $hargatotal=($lama_sewa*$biaya_sewa)+$denda;
+                                        $uang_bayar =$_POST["bayar"];
+
+                                        
+
+                                        //Query input menginput data kedalam tabel barang
+                                        
+                                        $sql4="insert into pengembalian VALUES (null,$id_admin,$id_mobil,$id_customer,$id_sewa,'$tanggal_kembali','$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal )";
+                                        
+                                        $sql6="INSERT INTO pembayaran VALUES (null, $id_customer, $id_mobil, $lama_sewa, $uang_bayar, '$keterangan', $denda , $hargatotal)";
+                                        
+                                        //Mengeksekusi/menjalankan query diatas	
+                                        $hasil=mysqli_query($conn,$sql4);
+
+                                        //Kondisi apakah berhasil atau tidak
+                                        if ($hasil) {
+                                            echo "<script>alert('Berhasil Insert Data!');</script>";
+                                            header("location:pembayaran.php;");
+                                        }
+                                        else {
+                                            echo "<script>alert('Gagal Insert Data!')</script>";
+                                            echo mysqli_error($conn);
+                                        }  
+                                    }  
+                                ?>
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
+
+
+
             <!-- End of Content -->
 
             <!-- Footer -->
