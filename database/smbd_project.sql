@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jun 2021 pada 14.55
+-- Waktu pembuatan: 02 Jun 2021 pada 18.37
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -45,6 +45,15 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_mobil` (IN `vidmobil` INT(11), IN `vnopolmobil` VARCHAR(100), IN `vtipemobil` VARCHAR(100), IN `vtahun_produksi` INT(11), IN `vhargasewa` INT(11), IN `vketerangan` VARCHAR(100))  BEGIN 
 INSERT INTO `mobil`(`id_mobil`, `nopol_mobil`, `tipe_mobil`, `tahun_produksi`, `harga_sewa`, `keterangan`)
 VALUES (vidmobil,vnopolmobil,vtipemobil,vtahun_produksi,vhargasewa,vketerangan);
+END$$
+
+--
+-- Fungsi
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `show_car` (`car` INT) RETURNS INT(11) BEGIN
+DECLARE jml INT;
+SELECT COUNT(*) AS jml_car INTO jml FROM pengembalian WHERE id_mobil = car;
+RETURN jml;
 END$$
 
 DELIMITER ;
@@ -95,7 +104,9 @@ CREATE TABLE `customer` (
 INSERT INTO `customer` (`id_customer`, `nama`, `no_ktp`, `alamat`, `tanggal_lahir`) VALUES
 (1, 'Farhan', 3562000, 'Sidoarjo', '2000-07-31'),
 (2, 'Risal', 3562001, 'Lamongan', '2000-06-22'),
-(3, 'Farhan Reynaldi', 12323, 'Bjn', '2021-06-02');
+(3, 'Farhan Reynaldi', 12323, 'Bjn', '2021-06-02'),
+(4, 'Yudha Krisnawan', 1232355, 'Bjn', '2021-06-12'),
+(5, 'Farhan Reynaldi', 12323, 'Bjn', '2021-06-09');
 
 -- --------------------------------------------------------
 
@@ -136,7 +147,9 @@ CREATE TABLE `log_data_mobil` (
 
 INSERT INTO `log_data_mobil` (`id_log`, `id_mobil`, `harga_lama`, `harga_baru`, `waktu_perubahan`) VALUES
 (1, 1, 2000000, 90000, '2021-06-02'),
-(2, 1, 90000, 2000000, '2021-06-02');
+(2, 1, 90000, 2000000, '2021-06-02'),
+(3, 2, 2300000, 2300000, '2021-06-02'),
+(4, 2, 2300000, 2300000, '2021-06-02');
 
 -- --------------------------------------------------------
 
@@ -244,9 +257,10 @@ INSERT INTO `pengembalian` (`id_pengembalian`, `id_admin`, `id_mobil`, `id_custo
 (14, 1, 1, 1, 14, '0000-00-00', 'lecet bosss', 9, 2000000, 1000000, 19000000, 'terbayar'),
 (16, 1, 2, 1, 15, '2021-06-10', 'lecetttt', 9, 2300000, 1000000, 21700000, 'terbayar'),
 (17, 1, 2, 2, 16, '2021-06-11', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
-(18, 1, 2, 2, 17, '2021-06-10', 'lecet bosss', 9, 2300000, 10000000, 30700000, 'belum terbayar'),
-(19, 1, 2, 3, 18, '2021-06-25', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'belum terbayar'),
-(20, 1, 2, 1, 19, '2021-06-11', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'belum terbayar');
+(18, 1, 2, 2, 17, '2021-06-10', 'lecet bosss', 9, 2300000, 10000000, 30700000, 'terbayar'),
+(19, 1, 2, 3, 18, '2021-06-25', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(20, 1, 2, 1, 19, '2021-06-11', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(21, 1, 2, 4, 20, '2021-06-10', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar');
 
 -- --------------------------------------------------------
 
@@ -358,13 +372,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT untuk tabel `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `log_data_mobil`
 --
 ALTER TABLE `log_data_mobil`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `mobil`
@@ -376,13 +390,13 @@ ALTER TABLE `mobil`
 -- AUTO_INCREMENT untuk tabel `pengembalian`
 --
 ALTER TABLE `pengembalian`
-  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
-  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
