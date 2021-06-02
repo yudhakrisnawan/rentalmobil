@@ -224,7 +224,7 @@ if(isset ($_SESSION['username'])){
                                         $id_customer=$_POST["id_customer"];
                                         $tanggal_sewa=$_POST["tanggal_sewa"];
                                         $waktu_sewa=$_POST["waktu_sewa"];
-                                        //Query input menginput data kedalam tabel barang
+                                        //Query input menginput data kedalam tabel penyewaan
                                         $sql3="CALL penyewaan ($id_admin,'$id_mobil','$id_customer','$tanggal_sewa',$waktu_sewa)";
 
                                         //Mengeksekusi/menjalankan query diatas	
@@ -233,7 +233,8 @@ if(isset ($_SESSION['username'])){
                                         //Kondisi apakah berhasil atau tidak
                                         if ($hasil) {
                                             echo "<script>alert('Berhasil Insert Data!');</script>";
-                                            header("Refresh:0");
+                                            // header("Refresh:0");
+                                            echo mysqli_error($conn);
                                         }
                                         else {
                                             echo "<script>alert('Gagal Insert Data!')</script>";

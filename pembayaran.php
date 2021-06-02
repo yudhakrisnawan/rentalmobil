@@ -67,7 +67,7 @@ if(isset ($_SESSION['username'])){
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="pengembalian.php">
                 <img alt="Image placeholder" src="img/kembali.png">
                     <span>&nbsp;Pengembalian</span>
@@ -175,7 +175,7 @@ if(isset ($_SESSION['username'])){
                                         <div class="col-sm-10">
                                             <select name="id_sewa" class="form-control">
                                                 <?php 
-                                                $sql1="select * from pengembalian";
+                                                $sql1="SELECT * FROM pengembalian WHERE keterangan_bayar='belum terbayar'";
                                                 $hasil=mysqli_query($conn,$sql1);
                                                 $no=0;
                                                 while ($data2 = mysqli_fetch_array($hasil)) {
@@ -251,8 +251,8 @@ if(isset ($_SESSION['username'])){
                                     <?php
                                         if(isset($_POST['kirim'])){
                                             $id_sewa1 = $_POST['id_sewa1'];
-                                            $query_read = mysqli_query($conn, "SELECT lama_sewa, biaya_sewa, denda FROM pengembalian WHERE id_sewa = $id_sewa1");
-                                            
+                                            $query1 = "SELECT lama_sewa, biaya_sewa, denda FROM pengembalian WHERE id_sewa = $id_sewa1";                                           
+                                            $query_read = mysqli_query($conn, $query1);
                                             while($test = mysqli_fetch_array($query_read)){
                                                 $lama_sewa = $test[0]; 
                                                 $biaya_sewa = $test[1];
@@ -262,7 +262,9 @@ if(isset ($_SESSION['username'])){
                                             $bayar = $_POST['bayar'];
                                             $bayar = (int) filter_var($bayar, FILTER_SANITIZE_NUMBER_INT);
                                             $tagihan = (int) filter_var($tagihan, FILTER_SANITIZE_NUMBER_INT);
-                                            $kembalian = $bayar-$tagihan;           
+                                            $kembalian = $bayar-$tagihan; 
+                                            
+                                            mysqli_query($conn, "UPDATE pengembalian SET keterangan_bayar = 'terbayar' WHERE id_sewa = $id_sewa1");     
                                         }
                                     ?>  
                                     <div class="form-group row">

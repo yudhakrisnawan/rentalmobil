@@ -53,7 +53,7 @@ if(isset ($_SESSION['username'])){
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="data_mobil.php">
                 <img alt="Image placeholder" src="img/mobil.png">
                     <span>&nbsp;Data Mobil</span>
@@ -67,7 +67,7 @@ if(isset ($_SESSION['username'])){
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="pengembalian.php">
                 <img alt="Image placeholder" src="img/kembali.png">
                     <span>&nbsp;Pengembalian</span>
@@ -152,125 +152,48 @@ if(isset ($_SESSION['username'])){
             <!-- Content -->
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Pengembalian</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Data Mobil</h1>
+                    <a href="data_mobil.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tampilkan Seluruh Data Mobil</a>
                 </div>
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <div class="judul">
-                                    <h4 align="center">Tambah Data Pengembalian</h4>
-                                    <br>
-                                </div>
-                                <form action="" method="post">
-                                    <input type="hidden" name="id_admin" value="<?php echo $r['id_admin'];?>">
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Id Sewa</label>
-                                        <div class="col-sm-10">
-                                            <select name="id_sewa" class="form-control">
-                                                    <?php 
-                                                $sql1="select * from penyewaan";
-                                                $hasil=mysqli_query($conn,$sql1);
-                                                $no=0;
-                                                while ($data2 = mysqli_fetch_array($hasil)) {
-                                                $no++;
-                                                ?>
-                                            
-                                                <option  type="integer" value="<?php echo $data2['id_sewa'];?>" name="id_sewa"><?php echo $data2['id_sewa'];?></option>
-                                                
-                                                <?php 
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Tanggal Kembali</label>
-                                        <div class="col-sm-10">
-                                            <input type="date" name="tanggal_kembali" class="form-control" placeholder="Masukkan Tanggal Kembali" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Keterangan</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Denda</label>
-                                        <div class="col-sm-10">
-                                            <input type="integer" name="denda" class="form-control" placeholder="Masukkan Denda (Dalam Rupiah)" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label"></label>
-                                        <div class="col-sm-10">
-                                            <button type="submit" name="kirim" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan Data</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <?php
-                                    if(isset($_POST['kirim'])){
-                                        $id_sewa=$_POST["id_sewa"];
-
-                                        $sql2="SELECT * FROM penyewaan WHERE id_sewa=$id_sewa";
-
-                                        $hasil2=mysqli_query($conn,$sql2);
-                                        while ($data2 = mysqli_fetch_array($hasil2)){
-                                        $id_mobil=$data2['id_mobil'];
-                                        $id_customer=$data2['id_customer'];
+                            <?php
+                            $query_data_mobil = "SELECT * FROM mobil_tersedia";
+                            $sql_data_mobil = mysqli_query($conn, $query_data_mobil);
+                            $no = 1;
+                            ?>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead align="center">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Id Mobil</th>
+                                            <th>Nopol Mobil</th>
+                                            <th>Tipe Mobil</th>
+                                            <th>Tahun Produksi</th>
+                                            <th>Harga Sewa</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody align="center">
+                                    <?php
+                                        while($r_dt_mobil = mysqli_fetch_array($sql_data_mobil)){
+                                    ?>
+                                        <tr class="odd gradeX">
+                                        <td><center><?php echo $no++; ?>.</center></td>
+                                        <td><?php echo $r_dt_mobil['id_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['nopol_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['tipe_mobil']; ?></td>
+                                        <td><?php echo $r_dt_mobil['tahun_produksi']; ?></td>
+                                        <td><?php echo $r_dt_mobil['harga_sewa']; ?></td>
+                                        <td><?php echo $r_dt_mobil['keterangan']; ?></td>
+                                        </tr>
+                                    <?php
                                         }
-
-                                        $id_admin=$_POST["id_admin"];
-
-
-                                        $tanggal_kembali=$_POST["tanggal_kembali"];
-                                        $keterangan=$_POST["keterangan"];
-                                        $denda=$_POST["denda"];
-
-                                        $sql3="SELECT waktu_sewa FROM penyewaan WHERE id_sewa=$id_sewa";
-                                        
-                                        
-                                        
-                                        $hasil3=mysqli_query($conn,$sql3);
-                                        
-                                        $data3 = mysqli_fetch_array($hasil3);
-                                        $lama_sewa=$data3[0];
-
-                                        $sql5="SELECT harga_sewa FROM mobil WHERE id_mobil=$id_mobil";
-                                        $hasil5=mysqli_query($conn,$sql5);
-                                        $data5 = mysqli_fetch_array($hasil5);
-
-                                        $biaya_sewa=$data5[0];
-
-                                        $hargatotal=($lama_sewa*$biaya_sewa)+$denda;
-                                        $keterangan_bayar = "belum terbayar";
-                                        
-
-                                        //Query input menginput data kedalam tabel barang
-                                        
-                                        $sql4="CALL pengembalian(null,$id_admin,$id_mobil,$id_customer,$id_sewa,$tanggal_kembali,'$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal,'$keterangan_bayar')";
-                                        
-                                        
-                                        
-                                        //Mengeksekusi/menjalankan query diatas	
-                                        $hasil=mysqli_query($conn,$sql4);
-
-                                        //Kondisi apakah berhasil atau tidak
-                                        if ($hasil) {
-                                            echo "<script>alert('Berhasil Insert Data!');</script>";
-                                            // mysqli_query($conn, "DELETE FROM penyewaan WHERE id_sewa = $id_sewa");
-                                            // mysqli_query($conn, "UPDATE mobil SET keterangan = 'tersedia' WHERE id_mobil = $id_mobil");
-                                            // header("location:pembayaran.php");
-                                            echo mysqli_error($conn);
-                                        }
-                                        else {
-                                            echo "<script>alert('Gagal Insert Data!')</script>";
-                                            echo mysqli_error($conn);
-                                        }  
-                                    }  
-                                ?>
+                                    ?>
+                                    </tbody>
+                                </table> 
                             </div>
                         </div>
                     </div>

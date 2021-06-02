@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Jun 2021 pada 20.15
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.2.34
+-- Waktu pembuatan: 02 Jun 2021 pada 13.06
+-- Versi server: 10.4.11-MariaDB
+-- Versi PHP: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,11 +25,6 @@ DELIMITER $$
 --
 -- Prosedur
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pengembalian` (IN `vidadmin` VARCHAR(10), IN `vidmobil` VARCHAR(10), IN `vidcustomer` VARCHAR(10), IN `vidsewa` VARCHAR(10), IN `vtanggalkembali` DATE, IN `vketerangan` VARCHAR(10), IN `vdenda` INT(10))  BEGIN UPDATE mobil SET keterangan='tersedia' WHERE id_mobil = vidmobil ; 
-INSERT INTO `pengembalian` (`id_admin`, `id_mobil`, `id_customer`, `id_sewa`, `tanggal_kembali`, `keterangan`, `denda`) 
-VALUES (vidadmin, vidmobil, vidcustomer, vidsewa, vtanggalkembali, vketerangan, vdenda); DELETE FROM `penyewaan` WHERE `id_sewa` = vidsewa; 
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `penyewaan` (IN `vidadmin` VARCHAR(10), IN `vidmobil` VARCHAR(10), IN `vidcustomer` VARCHAR(10), IN `vtanggalsewa` DATE, IN `vwaktusewa` VARCHAR(10))  BEGIN UPDATE mobil SET keterangan='tidak tersedia' 
     WHERE id_mobil = vidmobil 
     ;
@@ -89,7 +84,8 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`id_customer`, `nama`, `no_ktp`, `alamat`, `tanggal_lahir`) VALUES
 (1, 'Farhan', 3562000, 'Sidoarjo', '2000-07-31'),
-(2, 'Risal', 3562001, 'Lamongan', '2000-06-22');
+(2, 'Risal', 3562001, 'Lamongan', '2000-06-22'),
+(3, 'Farhan Reynaldi', 12323, 'Bjn', '2021-06-02');
 
 -- --------------------------------------------------------
 
@@ -130,8 +126,23 @@ CREATE TABLE `mobil` (
 --
 
 INSERT INTO `mobil` (`id_mobil`, `nopol_mobil`, `tipe_mobil`, `tahun_produksi`, `harga_sewa`, `keterangan`) VALUES
-(1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tidak tersedia'),
-(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tersedia');
+(1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tersedia'),
+(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tidak tersedia');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `mobil_tersedia`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `mobil_tersedia` (
+`id_mobil` int(11)
+,`nopol_mobil` varchar(100)
+,`tipe_mobil` varchar(100)
+,`tahun_produksi` int(11)
+,`harga_sewa` int(11)
+,`keterangan` varchar(100)
+);
 
 -- --------------------------------------------------------
 
@@ -150,22 +161,21 @@ CREATE TABLE `pengembalian` (
   `lama_sewa` int(11) NOT NULL,
   `biaya_sewa` int(11) NOT NULL,
   `denda` int(11) NOT NULL,
-  `total_pembayaran` int(12) NOT NULL
+  `total_pembayaran` int(12) NOT NULL,
+  `keterangan_bayar` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pengembalian`
 --
 
-INSERT INTO `pengembalian` (`id_pengembalian`, `id_admin`, `id_mobil`, `id_customer`, `id_sewa`, `tanggal_kembali`, `keterangan`, `lama_sewa`, `biaya_sewa`, `denda`, `total_pembayaran`) VALUES
-(1, 1, 2, 2, 2, '2021-06-03', 'c', 0, 0, 46, 0),
-(2, 1, 2, 2, 2, '2021-06-03', 'c', 0, 0, 46, 0),
-(3, 1, 2, 2, 2, '2021-06-03', 'c', 0, 0, 46, 0),
-(4, 1, 2, 2, 2, '2021-06-02', 'a', 0, 0, 32, 0),
-(5, 1, 2, 2, 2, '2020-01-01', 'a', 0, 0, 12, 0),
-(6, 1, 2, 2, 2, '2020-01-01', 'a', 0, 0, 12, 0),
-(7, 1, 1, 1, 3, '2021-06-02', 'a', 0, 0, 32, 0),
-(8, 1, 1, 1, 4, '2021-06-03', 'a', 9, 2000000, 100000, 18100000);
+INSERT INTO `pengembalian` (`id_pengembalian`, `id_admin`, `id_mobil`, `id_customer`, `id_sewa`, `tanggal_kembali`, `keterangan`, `lama_sewa`, `biaya_sewa`, `denda`, `total_pembayaran`, `keterangan_bayar`) VALUES
+(9, 1, 1, 1, 4, '2021-06-10', 'lecet bosss', 9, 2000000, 1000000, 19000000, 'terbayar'),
+(10, 1, 2, 1, 11, '2021-06-10', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(11, 1, 2, 1, 11, '2021-06-03', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(12, 1, 2, 1, 12, '2021-06-03', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(13, 1, 2, 2, 13, '2021-06-09', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'belum terbayar'),
+(14, 1, 1, 1, 14, '0000-00-00', 'lecet bosss', 9, 2000000, 1000000, 19000000, 'belum terbayar');
 
 -- --------------------------------------------------------
 
@@ -187,7 +197,16 @@ CREATE TABLE `penyewaan` (
 --
 
 INSERT INTO `penyewaan` (`id_sewa`, `id_admin`, `id_mobil`, `id_customer`, `tanggal_sewa`, `waktu_sewa`) VALUES
-(4, 1, 1, 1, '2021-06-02', 9);
+(15, 1, 2, 1, '2021-06-04', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `mobil_tersedia`
+--
+DROP TABLE IF EXISTS `mobil_tersedia`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `mobil_tersedia`  AS  select `mobil`.`id_mobil` AS `id_mobil`,`mobil`.`nopol_mobil` AS `nopol_mobil`,`mobil`.`tipe_mobil` AS `tipe_mobil`,`mobil`.`tahun_produksi` AS `tahun_produksi`,`mobil`.`harga_sewa` AS `harga_sewa`,`mobil`.`keterangan` AS `keterangan` from `mobil` where `mobil`.`keterangan` in (select `mobil`.`keterangan` from DUAL  where `mobil`.`keterangan` = 'tersedia') ;
 
 --
 -- Indexes for dumped tables
@@ -251,7 +270,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT untuk tabel `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `mobil`
@@ -263,13 +282,13 @@ ALTER TABLE `mobil`
 -- AUTO_INCREMENT untuk tabel `pengembalian`
 --
 ALTER TABLE `pengembalian`
-  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
-  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

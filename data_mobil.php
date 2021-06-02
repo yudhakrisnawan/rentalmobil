@@ -153,6 +153,7 @@ if(isset ($_SESSION['username'])){
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Data Mobil</h1>
+                    <a href="data_mobil_tersedia.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tampilkan Data Mobil Tersedia</a>
                 </div>
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
