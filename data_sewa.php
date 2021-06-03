@@ -159,124 +159,54 @@ if(isset ($_SESSION['username'])){
                         <div class="card-body">
                             <div class="responsive">
                                 <div class="judul">
-                                    <h4 align="center">Tambah Data Pengembalian</h4>
+                                    <h4 align="center">Data Sewa</h4>
                                     <br>
                                 </div>
-                                <form action="" method="post">
-                                    <input type="hidden" name="id_admin" value="<?php echo $r['id_admin'];?>">
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Id Sewa</label>
-                                        <div class="col-sm-10">
-                                            <select name="id_sewa">
-                                                    <?php 
-                                                $sql1="select * from penyewaan";
-                                                $hasil=mysqli_query($conn,$sql1);
-                                                $no=0;
-                                                while ($data2 = mysqli_fetch_array($hasil)) {
-                                                $no++;
-                                                ?>
-                                            
-                                                <option  type="integer" value="<?php echo $data2['id_sewa'];?>" name="id_sewa"><?php echo $data2['id_sewa'];?></option>
-                                                
-                                                <?php 
-                                                }
-                                                ?>
-                                            </select>
-                                            <a href="data_sewa.php" name="data_customer" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"> <i class="fas fa-fw fa-eye"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Tanggal Kembali</label>
-                                        <div class="col-sm-10">
-                                            <input type="date" name="tanggal_kembali" class="form-control" placeholder="Masukkan Tanggal Kembali" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Keterangan</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">Denda</label>
-                                        <div class="col-sm-10">
-                                            <input type="integer" name="denda" class="form-control" placeholder="Masukkan Denda (Dalam Rupiah)" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label"></label>
-                                        <div class="col-sm-10">
-                                            <button type="submit" name="kirim" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Tambahkan Data</button>
-                                        </div>
-                                    </div>
-                                </form>
                                 <?php
-                                    if(isset($_POST['kirim'])){
-                                        $id_sewa=$_POST["id_sewa"];
-
-                                        $sql2="SELECT * FROM penyewaan WHERE id_sewa=$id_sewa";
-
-                                        $hasil2=mysqli_query($conn,$sql2);
-                                        while ($data2 = mysqli_fetch_array($hasil2)){
-                                        $id_mobil=$data2['id_mobil'];
-                                        $id_customer=$data2['id_customer'];
-                                        }
-
-                                        $id_admin=$_POST["id_admin"];
-
-
-                                        $tanggal_kembali=$_POST["tanggal_kembali"];
-                                        $keterangan=$_POST["keterangan"];
-                                        $denda=$_POST["denda"];
-
-                                        $sql3="SELECT waktu_sewa FROM penyewaan WHERE id_sewa=$id_sewa";
-                                        
-                                        
-                                        
-                                        $hasil3=mysqli_query($conn,$sql3);
-                                        
-                                        $data3 = mysqli_fetch_array($hasil3);
-                                        $lama_sewa=$data3[0];
-
-                                        $sql5="SELECT harga_sewa FROM mobil WHERE id_mobil=$id_mobil";
-                                        $hasil5=mysqli_query($conn,$sql5);
-                                        $data5 = mysqli_fetch_array($hasil5);
-
-                                        $biaya_sewa=$data5[0];
-
-                                        $hargatotal=($lama_sewa*$biaya_sewa)+$denda;
-                                        $keterangan_bayar = "belum terbayar";
-                                        
-
-                                        //Query input menginput data kedalam tabel barang
-                                        
-                                        mysqli_begin_transaction($conn);
-                                        $sql4="CALL pengembalian(null,$id_admin,$id_mobil,$id_customer,$id_sewa,'$tanggal_kembali','$keterangan',$lama_sewa,$biaya_sewa,$denda,$hargatotal,'$keterangan_bayar')";
-                                        
-                                        //Mengeksekusi/menjalankan query diatas
-                                        	
-                                        $hasil=mysqli_query($conn,$sql4);
-
-                                        //Kondisi apakah berhasil atau tidak
-                                        if (mysqli_commit($conn)) {
-                                            echo "<script>alert('Berhasil Insert Data!');</script>";
-                                            header("Refresh:0; url=pembayaran.php");
-                                            echo mysqli_error($conn);
-                                        }
-                                        else {
-                                            mysqli_rollback($conn);
-                                            echo "<script>alert('Gagal Insert Data!')</script>";
-                                            echo mysqli_error($conn);
-                                        }  
-                                    }  
+                                $query_data_sewa = "SELECT penyewaan.id_sewa, penyewaan.id_admin, penyewaan.id_mobil, penyewaan.id_customer, customer.nama, penyewaan.tanggal_sewa, penyewaan.waktu_sewa
+                                                    FROM penyewaan
+                                                    INNER JOIN customer ON penyewaan.id_customer = customer.id_customer;";
+                                $sql_data_sewa = mysqli_query($conn, $query_data_sewa);
+                                $no = 1;
                                 ?>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead align="center">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Id Sewa</th>
+                                            <th>Id Admin</th>
+                                            <th>Id Mobil</th>
+                                            <th>Id Customer</th>
+                                            <th>Nama Customer</th>
+                                            <th>Tanggal Sewa</th>
+                                            <th>Waktu Sewa (Hari)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody align="center">
+                                    <?php
+                                        while($r_dt_sewa = mysqli_fetch_array($sql_data_sewa)){
+                                    ?>
+                                        <tr class="odd gradeX">
+                                        <td><center><?php echo $no++; ?>.</center></td>
+                                        <td><?php echo $r_dt_sewa['id_sewa']; ?></td>
+                                        <td><?php echo $r_dt_sewa['id_admin']; ?></td>
+                                        <td><?php echo $r_dt_sewa['id_mobil']; ?></td>
+                                        <td><?php echo $r_dt_sewa['id_customer']; ?></td>
+                                        <td><?php echo $r_dt_sewa['nama']; ?></td>
+                                        <td><?php echo $r_dt_sewa['tanggal_sewa']; ?></td>
+                                        <td><?php echo $r_dt_sewa['waktu_sewa']; ?></td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table> 
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
-            <br><br><br><br>
+            <br><br><br><br><br><br>
             <!-- End of Content -->
 
             <!-- Footer -->
