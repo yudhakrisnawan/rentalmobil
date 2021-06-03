@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jun 2021 pada 18.37
+-- Waktu pembuatan: 03 Jun 2021 pada 05.05
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.6
 
@@ -102,11 +102,14 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id_customer`, `nama`, `no_ktp`, `alamat`, `tanggal_lahir`) VALUES
-(1, 'Farhan', 3562000, 'Sidoarjo', '2000-07-31'),
-(2, 'Risal', 3562001, 'Lamongan', '2000-06-22'),
-(3, 'Farhan Reynaldi', 12323, 'Bjn', '2021-06-02'),
-(4, 'Yudha Krisnawan', 1232355, 'Bjn', '2021-06-12'),
-(5, 'Farhan Reynaldi', 12323, 'Bjn', '2021-06-09');
+(1, 'Ridho', 51, 'Sidoarjo', '2000-07-31'),
+(2, 'JM Havidz', 31, 'Lamongan', '2000-06-22'),
+(3, 'Farhan Reynaldi', 114, 'Sidoarjo', '2021-06-02'),
+(4, 'Yudha Krisnawan', 117, 'Lamongan', '2021-06-12'),
+(5, 'Anam Gamtenk', 128, 'Madura Pride', '2021-06-09'),
+(6, 'Fajar Naufal', 126, 'Surabaya', '2000-01-10'),
+(7, 'Andicho Putra', 125, 'Jombang', '2005-02-02'),
+(8, 'Wira Nagara', 12323, 'Surabaya', '2021-06-03');
 
 -- --------------------------------------------------------
 
@@ -149,7 +152,14 @@ INSERT INTO `log_data_mobil` (`id_log`, `id_mobil`, `harga_lama`, `harga_baru`, 
 (1, 1, 2000000, 90000, '2021-06-02'),
 (2, 1, 90000, 2000000, '2021-06-02'),
 (3, 2, 2300000, 2300000, '2021-06-02'),
-(4, 2, 2300000, 2300000, '2021-06-02');
+(4, 2, 2300000, 2300000, '2021-06-02'),
+(5, 2, 2300000, 500000, '2021-06-03'),
+(6, 12, 600000, 600000, '2021-06-03'),
+(7, 13, 225000, 225000, '2021-06-03'),
+(8, 8, 500000, 500000, '2021-06-03'),
+(9, 10, 320000, 320000, '2021-06-03'),
+(10, 11, 700000, 700000, '2021-06-03'),
+(11, 11, 700000, 700000, '2021-06-03');
 
 -- --------------------------------------------------------
 
@@ -172,7 +182,18 @@ CREATE TABLE `mobil` (
 
 INSERT INTO `mobil` (`id_mobil`, `nopol_mobil`, `tipe_mobil`, `tahun_produksi`, `harga_sewa`, `keterangan`) VALUES
 (1, 'M 331 ML', 'Nissan GTR', 2015, 2000000, 'tersedia'),
-(2, 'M 1256 LG', 'Honda Brio', 2021, 2300000, 'tersedia');
+(2, 'M 1256 LG', 'Honda Brio', 2021, 500000, 'tersedia'),
+(3, 'M 1212 T', 'Mitsubishi Lancer', 2016, 900000, 'tersedia'),
+(4, 'M 123 L', 'Honda Brio', 2010, 250000, 'tersedia'),
+(5, 'M 3113 K', 'Misuzu Elf Microbus', 2013, 1000000, 'tersedia'),
+(6, 'M 321 L', 'Toyota Avanza', 2009, 300000, 'tersedia'),
+(7, 'M 3212 J', 'Nissan GTR', 2019, 900000, 'tersedia'),
+(8, 'M 3268 KM', 'Toyota Kijang Inova Reborn', 2017, 500000, 'tidak tersedia'),
+(9, 'M 6326 KM', 'Mitsubishi Xpender', 2020, 450000, 'tersedia'),
+(10, 'M 7373 KM', 'Toyota Civic', 2017, 320000, 'tidak tersedia'),
+(11, 'M 8326 R', 'Mitsubishi Pajero', 2016, 700000, 'tersedia'),
+(12, 'M 8736 KM', 'Toyota Fortuner', 2010, 600000, 'tersedia'),
+(13, 'M 929 L', 'Toyota Yaris', 2012, 225000, 'tersedia');
 
 --
 -- Trigger `mobil`
@@ -260,7 +281,8 @@ INSERT INTO `pengembalian` (`id_pengembalian`, `id_admin`, `id_mobil`, `id_custo
 (18, 1, 2, 2, 17, '2021-06-10', 'lecet bosss', 9, 2300000, 10000000, 30700000, 'terbayar'),
 (19, 1, 2, 3, 18, '2021-06-25', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
 (20, 1, 2, 1, 19, '2021-06-11', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
-(21, 1, 2, 4, 20, '2021-06-10', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar');
+(21, 1, 2, 4, 20, '2021-06-10', 'lecet bosss', 9, 2300000, 1000000, 21700000, 'terbayar'),
+(22, 1, 11, 6, 23, '2021-06-10', 'Lecet lecet', 7, 700000, 1000000, 5900000, 'terbayar');
 
 -- --------------------------------------------------------
 
@@ -276,6 +298,14 @@ CREATE TABLE `penyewaan` (
   `tanggal_sewa` date NOT NULL,
   `waktu_sewa` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `penyewaan`
+--
+
+INSERT INTO `penyewaan` (`id_sewa`, `id_admin`, `id_mobil`, `id_customer`, `tanggal_sewa`, `waktu_sewa`) VALUES
+(21, 1, 8, 5, '2021-06-11', 9),
+(22, 1, 10, 7, '2021-06-03', 6);
 
 -- --------------------------------------------------------
 
@@ -372,31 +402,31 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT untuk tabel `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `log_data_mobil`
 --
 ALTER TABLE `log_data_mobil`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `mobil`
 --
 ALTER TABLE `mobil`
-  MODIFY `id_mobil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_mobil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `pengembalian`
 --
 ALTER TABLE `pengembalian`
-  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
-  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
