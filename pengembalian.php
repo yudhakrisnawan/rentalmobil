@@ -35,7 +35,7 @@ if(isset ($_SESSION['username'])){
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
         <?php
             if($r['id_level'] == 1){
         ?>
@@ -260,8 +260,6 @@ if(isset ($_SESSION['username'])){
                                         //Kondisi apakah berhasil atau tidak
                                         if (mysqli_commit($conn)) {
                                             echo "<script>alert('Berhasil Insert Data!');</script>";
-                                            // mysqli_query($conn, "DELETE FROM penyewaan WHERE id_sewa = $id_sewa");
-                                            // mysqli_query($conn, "UPDATE mobil SET keterangan = 'tersedia' WHERE id_mobil = $id_mobil");
                                             header("Refresh:0; url=pembayaran.php");
                                             echo mysqli_error($conn);
                                         }

@@ -35,7 +35,7 @@ if(isset ($_SESSION['username'])){
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
         <?php
             if($r['id_level'] == 1){
         ?>
@@ -181,7 +181,7 @@ if(isset ($_SESSION['username'])){
                 </div>
                 <div class="row">
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
@@ -193,7 +193,7 @@ if(isset ($_SESSION['username'])){
                                             </div>
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-primary" role="progressbar"
+                                                    <div class="progress-bar bg-info" role="progressbar"
                                                         style="width: 100%" aria-valuenow="50" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
@@ -208,7 +208,7 @@ if(isset ($_SESSION['username'])){
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
@@ -220,7 +220,7 @@ if(isset ($_SESSION['username'])){
                                             </div>
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-primary" role="progressbar"
+                                                    <div class="progress-bar bg-info" role="progressbar"
                                                         style="width: 100%" aria-valuenow="50" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>

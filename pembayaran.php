@@ -35,7 +35,7 @@ if(isset ($_SESSION['username'])){
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
         <?php
             if($r['id_level'] == 1){
         ?>
@@ -157,7 +157,7 @@ if(isset ($_SESSION['username'])){
                 <section class="mar-top--x-3 mar-bottom--x-5">
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="responsive">
                                 <div class="judul">
                                     <h4 align="center">Transaksi Pembayaran</h4>
                                     <br>
